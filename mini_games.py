@@ -66,3 +66,40 @@ def play_base_conversion_game():
             print(f"Wrong. The correct answer was {correct_answer}.")
 
     print(f"Game over! Your score: {score}/{total_questions}")
+
+
+def generate_question_roman_num():
+    roman_num_challenge = random.randint(1, 5000)
+    return roman_num_challenge
+
+
+def int_to_roman(roman_num_challenge):
+    # tuples to store immutable equivalence of roman letters to decimal numbers
+    roman_equivalent = [(1000, "M"), (900, "CM"), (500, "D"), (400, "CD"), (100, "C"), (90, "XC"), (50, "L"),
+                        (40, "XL"), (10, "X"), (9, "IX"), (5, "V"), (4, "IV"), (1, "I")]
+    roman_num = ""
+    for (number, letter) in roman_equivalent:
+        while roman_num_challenge >= number:
+            roman_num += letter
+            roman_num_challenge -= number
+    return roman_num
+
+
+def play_roman_num_game():
+    score = 0
+    total_questions = 1
+
+    for _ in range(total_questions):
+        roman_num_challenge = generate_question_roman_num()
+        correct_answer = int_to_roman(roman_num_challenge)
+        print(f"Convert the number {roman_num_challenge} to roman numeral: ", end="")
+
+        user_answer = input().strip().upper()
+
+        if user_answer == correct_answer:
+            print("Correct! Nice job.")
+            score += 1
+        else:
+            print(f"Wrong. The correct answer was {correct_answer}.")
+
+    print(f"End of game! Your score: {score}/{total_questions}")
