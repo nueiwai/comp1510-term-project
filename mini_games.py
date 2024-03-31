@@ -227,7 +227,7 @@ def play_caesar_cipher_game(gpa, term, shift_limit):
 
     # Check if the player's decryption is correct
     if player_decryption.lower() == original_message.lower():
-        print("Correct!! Well done, student. Keep up the good work.")
+        print("Correct!! Well done. Keep up the good work.")
     else:
         gpa -= 0.05
         print(f"Sorry, the correct decryption was: {original_message}")
