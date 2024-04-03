@@ -3,8 +3,7 @@ import random
 This module contains:
 
 Functions related to the character's attributes:
-    - character's position in the game
-    - character's GPA
+    - generating the character's new attributes at the start of the game & each term (level)
     - character's encounter with instructors (dependent on character's position in the game)
     - character's enrollment (did not drop out)
     - character's ability to proceed to the next level/term (graduation from term)
@@ -13,16 +12,37 @@ Functions related to the character's attributes:
 
 def make_character():
     """
-    Create a dictionary that contains character coordinates and GPA.
+    Create a dictionary that contains character's attributes at the beginning of the game.
 
-    :postcondition: create a dictionary with key:value pairs "X-coordinate": 0, "Y-coordinate": 0, "GPA": 2.0
-    :return: "X-coordinate": 0, "Y-coordinate": 0, "GPA": 2.0 as a dictionary
+    :postcondition: create a dictionary with keys "time", "GPA", "social", and "location"
+    :return: character attributes "time," "GPA," "social" and "location" as a dictionary
 
-    >>> student = make_character()
-    >>> student
-    {'X-coordinate': 0, 'Y-coordinate': 0, 'GPA': 2.0}
+    >>> test_character = make_character()
+    >>> test_character
+    {'time': 100, 'GPA': 3.5, 'social': 50, 'location': 1}
     """
-    return {"X-coordinate": 0, "Y-coordinate": 0, "GPA": 2.0}
+    return {'time': 100, 'GPA': 3.5, 'social': 50, 'location': 1}
+
+
+def make_character_each_term_start(character):
+    """
+    Create a dictionary that contains character's attributes at the start of each term that corresponds to that level.
+
+    :postcondition: create a dictionary with keys "time", "GPA", "social", and "location"
+    :return: character attributes "time," "GPA," "social" and "location" as a dictionary
+
+    >>> test_character = {'time': 50, 'GPA': 3.8, 'social': 50, 'location': 26}
+    >>> result = make_character_each_term_start(test_character)
+    >>> result
+    {'time': 120, 'GPA': 3.5, 'social': 60, 'location': 26}
+    """
+    if character['location'] == 26:
+        character = {'time': 120, 'GPA': 3.5, 'social': 60, 'location': 26}
+    elif character['location'] == 51:
+        character = {'time': 150, 'GPA': 3.5, 'social': 70, 'location': 51}
+    elif character['location'] == 76:
+        character = {'time': 180, 'GPA': 3.5, 'social': 80, 'location': 76}
+    return character
 
 
 def check_for_instructors():
@@ -41,16 +61,16 @@ def check_if_graduated_this_term(character):
     Check if the goal of meeting term graduation criteria is attained.
 
     :param character: a dictionary that stores the character's attributes
-    :precondition: character must be a dictionary with the format {'X-coordinate': 0, 'Y-coordinate': 0, 'GPA': 2.0}
+    :precondition: character must be a dictionary with keys "time", "GPA", "social", and "location"
     :postcondition: check if player's character attributes has reached the criteria for term graduation:
                  - 'GPA': greater than or equal to 2.0
     :return: if player's character attributes has met graduation criteria or not as a bool
 
-    >>> test_character = {'X-coordinate': 0, 'Y-coordinate': 0, 'GPA': 3.0}
+    >>> test_character = {'time': 50, 'GPA': 3.5, 'social': 50, 'location': 75}
     >>> check_if_graduated_this_term(test_character)
     True
 
-    >>> test_character = {'X-coordinate': 0, 'Y-coordinate': 0, 'GPA': 1.0}
+    >>> test_character = {'time': 50, 'GPA': 1.0, 'social': 50, 'location': 25}
     >>> check_if_graduated_this_term(test_character)
     False
     """
@@ -78,11 +98,11 @@ def is_enrolled(character):
     :postcondition: evaluate if the player's HP is still enrolled in the program as a student
     :return: if the player's GPA has dipped below 2.0 or not as a bool
 
-    >>> test_character = {'X-coordinate': 0, 'Y-coordinate': 0, 'GPA': 1.0}
+    >>> test_character = {'time': 50, 'GPA': 1.0, 'social': 50, 'location': 25}
     >>> is_enrolled(test_character)
     False
 
-    >>> test_character = {'X-coordinate': 0, 'Y-coordinate': 0, 'GPA': 3.0}
+    >>> test_character = {'time': 50, 'GPA': 3.5, 'social': 50, 'location': 75}
     >>> is_enrolled(test_character)
     True
     """
