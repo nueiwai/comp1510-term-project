@@ -29,6 +29,23 @@ def decimal_to_base(decimal_num, base):
     return result
 
 
+def generate_choices_for_base_conversion(correct_answer, base):
+    choices = [correct_answer]
+    # Generate two more unique choices
+    while len(choices) < 3:
+        choice = correct_answer
+        alter_position = random.randint(0, len(correct_answer) - 1)  # Randomly choose a position to change
+        new_digit = str(random.choice([digit for digit in range(base) if str(digit) != correct_answer[alter_position]]))
+        choice = choice[:alter_position] + new_digit + choice[alter_position+1:]  # Replace the digit in alter_position
+        if choice not in choices:
+            choices.append(choice)
+    random.shuffle(choices)
+
+    choice_keys = ["A", "B", "C"]
+    choice_dict = {key: value for key, value in zip(choice_keys, choices)}
+    return choice_dict
+
+
 def play_base_conversion_game(gpa, number_upperbound, base_upperbound):
     """
     Run a game where the player converts a decimal number to a specified base.
@@ -47,16 +64,9 @@ def play_base_conversion_game(gpa, number_upperbound, base_upperbound):
     # Upperbound is adjusted according to level
     base = random.randint(2, base_upperbound)
     correct_answer = decimal_to_base(decimal_number, base)
-    print(f"Convert the number {decimal_number} to base {base}: ", end="")
-
-    user_answer = input().strip()
-
-    if user_answer == correct_answer:
-        print("Correct! Well done. Keep up the good work.")
-    else:
-        gpa -= 0.05
-        print(f"Wrong. The correct answer was {correct_answer}.")
-        print(f"Your GPA has decreased to {gpa:.2f}")
+    choices = generate_choices_for_base_conversion(correct_answer, base)
+    print(f"Convert the number {decimal_number} to base {base}. Here are your options:")
+    get_player_choice_and_evaluate(choices, correct_answer, gpa)
 
 
 def roman_numeral_converter(number):
@@ -95,6 +105,24 @@ def roman_numeral_converter(number):
     return str(result)
 
 
+def generate_choices_for_roman_numeral(correct_answer, org_number):
+    choices = [correct_answer]
+    while len(choices) < 3:
+        # Generate a random number close to the original number for plausible incorrect answers
+        range_for_answer_variations = random.randint(-5, 5)
+        # While the answer is out of bound or already in choices, generate a new random number for variations
+        while (org_number + range_for_answer_variations < 1 or org_number + range_for_answer_variations > 5000 or
+               roman_numeral_converter(org_number + range_for_answer_variations) in choices):
+            range_for_answer_variations = random.randint(-5, 5)
+        choice = roman_numeral_converter(org_number + range_for_answer_variations)
+        choices.append(choice)
+    random.shuffle(choices)
+
+    choice_keys = ["A", "B", "C"]
+    choice_dict = dict(zip(choice_keys, choices))
+    return choice_dict
+
+
 def play_roman_numeral_conversion_game(gpa, target_num_upbound):
     """
     Run a game where the player must convert a randomly generated decimal number to its Roman numeral.
@@ -110,19 +138,10 @@ def play_roman_numeral_conversion_game(gpa, target_num_upbound):
 
     # Generate a random number for the game (upperbound to be adjusted according to level)
     target_number = random.randint(1, target_num_upbound)
-    print(f"Guess the Roman numeral for the number: {target_number}")
-
-    player_guess = input("Enter your guess: ").upper()
-
     correct_answer = roman_numeral_converter(target_number)
-
-    # Check the player's guess
-    if player_guess == correct_answer:
-        print("Correct! Well done. Keep up the good work.")
-    else:
-        gpa -= 0.05  # Decrease GPA by 0.05 for an incorrect guess
-        print(f"Incorrect! The correct Roman numeral was {correct_answer}.")
-        print(f"Your GPA has decreased to {gpa:.2f}")
+    choices = generate_choices_for_roman_numeral(correct_answer, target_number)
+    print(f"Convert the number {target_number} to a Roman numeral. Here are your options:")
+    get_player_choice_and_evaluate(choices, correct_answer, gpa)
 
 
 def caesarcipher(message, encode, shift):
@@ -182,10 +201,10 @@ def select_message_list(term):
     >>> select_message_list(4)
     ['Complexity and Algorithms', 'Cloud Computing Introduction', 'Cryptography and Network Security']
     """
-    term1 = ["Cat", "Dog", "Bird", "Chris"]
-    term2 = ["Red Velvet", "Logic Gates", "Star Wars", "Iron Man"]
-    term3 = ["Python Programming", "Caesar Cipher Game", "Encryption and Decryption", "Beauty and the Beast"]
-    term4 = ["Complexity and Algorithms", "Cloud Computing Introduction", "Cryptography and Network Security"]
+    term1 = ["Cat", "Dog", "Mop", "Hot"]
+    term2 = ["Black Widow", "Great Wall", "Magic Wand", "Heavy Rain", "Sweet Home"]
+    term3 = ["Summer Sun", "Forest Owl", "Public Eye", "Silver Fox", "Golden Gate"]
+    term4 = ["Feedback Loop", "Breakfast Nook ", "Colorful Bird", "Mountain Peak", "American Eagle "]
 
     if term == 1:
         return term1
@@ -197,9 +216,22 @@ def select_message_list(term):
         return term4
 
 
+def generate_caesar_cipher_variations(correct_message, all_messages):
+    caesarcipher_variations = [correct_message]  # Include the correct answer
+    while len(caesarcipher_variations) < 3:
+        fake_message = random.choice(all_messages)
+        if fake_message not in caesarcipher_variations and fake_message != correct_message:
+            caesarcipher_variations.append(fake_message)
+    random.shuffle(caesarcipher_variations)
+
+    caesar_choice_keys = ["A", "B", "C"]
+    caesar_choice_dict = dict(zip(caesar_choice_keys, caesarcipher_variations))
+    return caesar_choice_dict
+
+
 def play_caesar_cipher_game(gpa, term, shift_limit):
     """
-    Run a Caesar Cipher decryption game where a player attempts to decrypt an encrypted message using provided key..
+    Run a Caesar Cipher decryption game where a player attempts to decrypt an encrypted message using provided key.
 
     :param gpa: player's current GPA
     :param term: term no. indicating the difficulty level
@@ -217,21 +249,45 @@ def play_caesar_cipher_game(gpa, term, shift_limit):
     messages = select_message_list(term)
     original_message = random.choice(messages)
     # Shift can be adjusted according to the level
-    shift = random.randint(0, shift_limit)
+    shift = random.randint(1, shift_limit)
     encrypted_message = caesarcipher(original_message, True, shift)
 
-    print(f"Try to Decrypt this message (key = {shift}: {encrypted_message}")
+    print(f"Try to Decrypt this message (key = {shift}: {encrypted_message}. Your options are:")
+    message_choices = generate_caesar_cipher_variations(original_message, messages)
+    get_player_choice_and_evaluate(message_choices, original_message, gpa)
 
-    # Player's attempt to decrypt
-    player_decryption = input("Enter your decryption of the message: ")
 
-    # Check if the player's decryption is correct
-    if player_decryption.lower() == original_message.lower():
-        print("Correct!! Well done. Keep up the good work.")
+def get_player_choice_and_evaluate(choices, correct_answer, gpa):
+    """
+    Prompt the player to choose an answer from the given choices, validate the input, and evaluate the choice.
+
+    :param choices: A dictionary with choice labels (e.g., "A", "B", "C") to their corresponding answers
+    :param correct_answer: The correct answer string
+    :param gpa: Current player's gpa
+    """
+    for key, value in choices.items():
+        print(f"{key}: {value}")
+
+    while True:
+        try:
+            player_choice = input("Choose your answer (A, B, C): ").strip().upper()
+            if not player_choice.isalpha() or player_choice == '':
+                raise ValueError("Input must be a non-empty alphabetical string (A, B, or C).")
+            if player_choice not in choices:
+                raise ValueError("Invalid choice. Please select A, B, or C.")
+            break  # Exit the loop if input is valid
+        except ValueError as error:
+            print(error)
+
+    # Evaluate the player's choice after a valid input
+    if choices[player_choice] == correct_answer:
+        print("Correct! Well done. Keep up the good work.")
+        return gpa
     else:
-        gpa -= 0.05
-        print(f"Sorry, the correct decryption was: {original_message}")
+        gpa -= 0.05  # Decrease GPA by 0.05 for an incorrect guess
+        print(f"Incorrect! The correct answer was {correct_answer}.")
         print(f"Your GPA has decreased to {gpa:.2f}")
+        return gpa
 
 
 if __name__ == "__main__":
