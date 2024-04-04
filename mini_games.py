@@ -264,6 +264,9 @@ def get_player_choice_and_evaluate(choices, correct_answer, gpa):
     :param choices: A dictionary with choice labels (e.g., "A", "B", "C") to their corresponding answers
     :param correct_answer: The correct answer string
     :param gpa: Current player's gpa
+    :precondition: choices and correct_answer must be a non-empty string
+    :postcondition: get player's choice from input and compare it with correct answer and adjust player's gpa
+    :return: player's updated gpa
     """
     for key, value in choices.items():
         print(f"{key}: {value}")
