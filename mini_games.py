@@ -42,7 +42,6 @@ def generate_choices_for_base_conversion(correct_answer, base):
     random.shuffle(base_conversion_variations)
 
     choices_base_conversion = list(enumerate(base_conversion_variations, 1))
-    print(choices_base_conversion)
     return choices_base_conversion
 
 
@@ -266,22 +265,24 @@ def get_player_choice_and_evaluate(choices, correct_answer, gpa):
     :postcondition: get player's choice from input and compare it with correct answer and adjust player's gpa
     :return: player's updated gpa
     """
+    choices_allowed = dict()
     for key, value in choices:
         print(f"{key}: {value}")
+        choices_allowed.update({key: value})
 
     while True:
         try:
             player_choice = input("Choose your answer (1, 2, 3): ").strip()
-            if not player_choice.isnumeric() or player_choice == '':
+            if not player_choice.isdigit() or player_choice == '':
                 raise ValueError("Input must be a non-empty numeric string (1, 2, or 3).")
-            if player_choice not in choices:
+            if int(player_choice) not in choices_allowed:
                 raise ValueError("Invalid choice. Please select 1, 2, or 3.")
             break
         except ValueError as error:
             print(error)
 
     # Evaluate the player's choice after a valid input
-    if choices[player_choice] == correct_answer:
+    if choices_allowed[int(player_choice)] == correct_answer:
         print("Correct! Well done. Keep up the good work.")
         return gpa
     else:
