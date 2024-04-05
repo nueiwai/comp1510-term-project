@@ -30,20 +30,20 @@ def decimal_to_base(decimal_num, base):
 
 
 def generate_choices_for_base_conversion(correct_answer, base):
-    choices = [correct_answer]
-    # Generate two more unique choices
-    while len(choices) < 3:
+    base_conversion_variations = [correct_answer]
+    # Generate two more unique base_conversion_variations
+    while len(base_conversion_variations) < 3:
         choice = correct_answer
         alter_position = random.randint(0, len(correct_answer) - 1)  # Randomly choose a position to change
         new_digit = str(random.choice([digit for digit in range(base) if str(digit) != correct_answer[alter_position]]))
         choice = choice[:alter_position] + new_digit + choice[alter_position+1:]  # Replace the digit in alter_position
-        if choice not in choices:
-            choices.append(choice)
-    random.shuffle(choices)
+        if choice not in base_conversion_variations:
+            base_conversion_variations.append(choice)
+    random.shuffle(base_conversion_variations)
 
-    choice_keys = ["A", "B", "C"]
-    choice_dict = {key: value for key, value in zip(choice_keys, choices)}
-    return choice_dict
+    choices_base_conversion = list(enumerate(base_conversion_variations, 1))
+    print(choices_base_conversion)
+    return choices_base_conversion
 
 
 def play_base_conversion_game(gpa, number_upperbound, base_upperbound):
@@ -106,21 +106,20 @@ def roman_numeral_converter(number):
 
 
 def generate_choices_for_roman_numeral(correct_answer, org_number):
-    choices = [correct_answer]
-    while len(choices) < 3:
+    roman_numeral_variations = [correct_answer]
+    while len(roman_numeral_variations) < 3:
         # Generate a random number close to the original number for plausible incorrect answers
         range_for_answer_variations = random.randint(-5, 5)
-        # While the answer is out of bound or already in choices, generate a new random number for variations
+        # While answer is out of bound or already in roman_numeral_variations, generate a new random number  variations
         while (org_number + range_for_answer_variations < 1 or org_number + range_for_answer_variations > 5000 or
-               roman_numeral_converter(org_number + range_for_answer_variations) in choices):
+               roman_numeral_converter(org_number + range_for_answer_variations) in roman_numeral_variations):
             range_for_answer_variations = random.randint(-5, 5)
         choice = roman_numeral_converter(org_number + range_for_answer_variations)
-        choices.append(choice)
-    random.shuffle(choices)
+        roman_numeral_variations.append(choice)
+    random.shuffle(roman_numeral_variations)
 
-    choice_keys = ["A", "B", "C"]
-    choice_dict = dict(zip(choice_keys, choices))
-    return choice_dict
+    choices_roman_numeral = list(enumerate(roman_numeral_variations, 1))
+    return choices_roman_numeral
 
 
 def play_roman_numeral_conversion_game(gpa, target_num_upbound):
@@ -202,7 +201,7 @@ def select_message_list(term):
     ['Complexity and Algorithms', 'Cloud Computing Introduction', 'Cryptography and Network Security']
     """
     term1 = ["Cat", "Dog", "Mop", "Hot"]
-    term2 = ["Black Widow", "Great Wall", "Magic Wand", "Heavy Rain", "Sweet Home"]
+    term2 = ["Great Wall", "Magic Wand", "Heavy Rain", "Sweet Home"]
     term3 = ["Summer Sun", "Forest Owl", "Public Eye", "Silver Fox", "Golden Gate"]
     term4 = ["Feedback Loop", "Breakfast Nook ", "Colorful Bird", "Mountain Peak", "American Eagle "]
 
@@ -224,9 +223,8 @@ def generate_caesar_cipher_variations(correct_message, all_messages):
             caesarcipher_variations.append(fake_message)
     random.shuffle(caesarcipher_variations)
 
-    caesar_choice_keys = ["A", "B", "C"]
-    caesar_choice_dict = dict(zip(caesar_choice_keys, caesarcipher_variations))
-    return caesar_choice_dict
+    choices_caesarcipher = list(enumerate(caesarcipher_variations, 1))
+    return choices_caesarcipher
 
 
 def play_caesar_cipher_game(gpa, term, shift_limit):
@@ -268,17 +266,17 @@ def get_player_choice_and_evaluate(choices, correct_answer, gpa):
     :postcondition: get player's choice from input and compare it with correct answer and adjust player's gpa
     :return: player's updated gpa
     """
-    for key, value in choices.items():
+    for key, value in choices:
         print(f"{key}: {value}")
 
     while True:
         try:
-            player_choice = input("Choose your answer (A, B, C): ").strip().upper()
-            if not player_choice.isalpha() or player_choice == '':
-                raise ValueError("Input must be a non-empty alphabetical string (A, B, or C).")
+            player_choice = input("Choose your answer (1, 2, 3): ").strip()
+            if not player_choice.isnumeric() or player_choice == '':
+                raise ValueError("Input must be a non-empty numeric string (1, 2, or 3).")
             if player_choice not in choices:
-                raise ValueError("Invalid choice. Please select A, B, or C.")
-            break  # Exit the loop if input is valid
+                raise ValueError("Invalid choice. Please select 1, 2, or 3.")
+            break
         except ValueError as error:
             print(error)
 
