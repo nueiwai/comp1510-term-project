@@ -9,6 +9,11 @@ to execute. The code snippet must execute successfully for the boss to be defeat
 def final_boss_intro():
     """
     Print the intro message to the final boss challenge.
+
+    >>> final_boss_intro()
+    Congratulations! You've come so far. Welcome (welcome?) to the final boss!
+    To defeat the boss, try your best to write a piece of code that will execute successfully.
+    When you're done choosing your lines of code, enter 'e' (for execute of course) to execute selections.
     """
     print(f"Congratulations! You've come so far. Welcome (welcome?) to the final boss!")
     print(f"To defeat the boss, try your best to write a piece of code that will execute successfully.")
@@ -18,6 +23,9 @@ def final_boss_intro():
 def generate_code_snippet_options():
     """
     Generate the available list of code snippets for the player to choose from.
+
+    >>> generate_code_snippet_options()
+    ['result = math.factorial(5)', "print('Factorial of 5 is:', result)", 'import math']
     """
     return [
         f"result = math.factorial(5)",
@@ -31,6 +39,14 @@ def display_code_snippet_options(code_snippets):
     Print out a numbered list that displays all the available code snippets for the player to choose from.
 
     :param code_snippets: a list containing the code snippets available for selection
+
+    >>> display_code_snippet_options(
+    ...     ['import math', 'result = math.factorial(5)', "print('Factorial of 5 is:', result)"])
+    <BLANKLINE>
+    Available code snippets to choose from:
+    1. import math
+    2. result = math.factorial(5)
+    3. print('Factorial of 5 is:', result)
     """
     print(f"\nAvailable code snippets to choose from:")
     for count, code_snippet in enumerate(code_snippets):
@@ -65,6 +81,12 @@ def execute_chosen_code_snippets(chosen_snippets):
     Execute the code snippets chosen in the order the player chose them, all at once.
 
     :param chosen_snippets: a list containing the code snippets chosen by the player
+
+    >>> execute_chosen_code_snippets(
+    ...     ['import math', 'result = math.factorial(5)', "print('Factorial of 5 is:', result)"])
+    <BLANKLINE>
+    Your selected code snippets executed:
+    Factorial of 5 is: 120
     """
     print(f"\nYour selected code snippets executed:")
     for snippet in chosen_snippets:
