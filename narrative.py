@@ -1,4 +1,6 @@
 import time
+import pyfiglet
+
 """
 This module contains:
 
@@ -46,6 +48,14 @@ def bonus_part(character):
         co_op_term()
     else:
         print(f"Sorry, you did not meet the criteria to go into co-op. Chin-up! Grades aren't everything.")
+
+
+def welcome_message():
+    print("Welcome Player. You will be role playing as a computing student in this game. There will be a lot of "
+          "challenges for you. Make sure to manage your life well. Balance of your life is the key to success in this "
+          "game.")
+    f = pyfiglet.figlet_format("Computing Ranger", font="slant")
+    print(f)
 
 
 if __name__ == "__main__":
