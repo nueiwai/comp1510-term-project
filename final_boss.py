@@ -30,7 +30,12 @@ def generate_code_snippet_options():
     return [
         f"result = math.factorial(5)",
         f"print('Factorial of 5 is:', result)",
-        f"import math"
+        f"import math",
+        f"ph = 6\n",
+        f"if ph < 7.0:\n\t",
+        f"print('It is acidic!')\n",
+        f"elif ph < 4.0:\n\t",
+        f"print('It is a strong acid!')"
     ]
 
 
@@ -50,7 +55,7 @@ def display_code_snippet_options(code_snippets):
     """
     print(f"\nAvailable code snippets to choose from:")
     for count, code_snippet in enumerate(code_snippets):
-        print(f"{count + 1}. {code_snippet}")
+        print(f"{count + 1}. {code_snippet.strip()}")
 
 
 def get_player_choice(code_snippets):
@@ -89,8 +94,10 @@ def execute_chosen_code_snippets(chosen_snippets):
     Factorial of 5 is: 120
     """
     print(f"\nYour selected code snippets executed:")
-    for snippet in chosen_snippets:
-        exec(snippet)
+    code_string = ""
+    for code in chosen_snippets:
+        code_string += code
+    exec(code_string)
 
 
 def final_boss():
