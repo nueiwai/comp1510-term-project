@@ -10,6 +10,14 @@ The executed code snippets is now intended to "answer" the questions posed by th
 def job_interview_intro():
     """
     Print the intro message to the first job interview after graduation from CST.
+
+    >>> job_interview_intro()
+    Welcome to your first job interview.
+    To hopefully receive a job offer follow these instructions to the best of your abilities.
+    <BLANKLINE>
+    Write code that results in the answer to the question the interviewer is asking.
+    Remember not only does your code need to successfully execute, it needs to answer the question
+    When you're done choosing your lines of code, enter 'e' (for execute of course) to execute selections.
     """
     print(f"Welcome to your first job interview.")
     print(f"To hopefully receive a job offer follow these instructions to the best of your abilities.")
@@ -21,6 +29,9 @@ def job_interview_intro():
 def generate_code_snippet_options_for_interview(question_completed):
     """
     Generate the available list of code snippets for the player to choose from for the interview.
+
+    :param question_completed: a positive integer from 1 to 3
+    :return: a list of code snippets representing the available options for the given question
     """
     question_1 = [
         f"years = 8 % 3\n",
@@ -57,6 +68,25 @@ def generate_code_snippet_options_for_interview(question_completed):
 
 
 def select_interview_question(question_completed):
+    """
+    Select from three interview questions to display to interviewee in order.
+
+    :param question_completed: a positive integer from 1 to 3
+    :return: a tuple containing the correct answer to the question and a message from the interviewer
+
+    >>> select_interview_question(1)
+    <BLANKLINE>
+    Interviewer: How many years did it take you to graduate CST?
+    (2, 'Hm! You graduated on time, good for you. Next question.')
+    >>> select_interview_question(2)
+    <BLANKLINE>
+    Interviewer: What is the lost dog looking at?
+    ('The feijoada on the table!', 'Interesting, did not think you would get that one right. Last question.')
+    >>> select_interview_question(3)
+    <BLANKLINE>
+    Interviewer: True or false? Are you willing to work overtime?
+    (False, 'You passed the interview. 🤯')
+    """
     if question_completed == 1:
         print(f"\nInterviewer: How many years did it take you to graduate CST?")
         correct_answer = 2
