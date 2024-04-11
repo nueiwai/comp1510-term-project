@@ -18,7 +18,6 @@ def term_1_game_loop():
     game_map = map_components.generate_term_map()
     term = 1
     social_limit = 100
-    slept_yesterday = False
 
     while player["location"] < 26 and player["time"] > 5 and player["GPA"] < 4.0:
         map_components.print_game_map(player)
@@ -26,7 +25,7 @@ def term_1_game_loop():
 
         if player["location"] in sick_positions:
             time_lost = player_attribute_adjustments.sick_event_adjustment(player, social_limit)
-            events_and_games_triggers.sick_event(player, time_lost)
+            events_and_games_triggers.sick_event(player, time_lost[1])
 
         if player["location"] in volunteering_positions:
             player_attribute_adjustments.volunteering_event_adjustment(player, social_limit)
@@ -36,11 +35,9 @@ def term_1_game_loop():
 
         events_and_games_triggers.trigger_quiz(player, term)
 
-        sleep_char = character.update_player_location(player, slept_yesterday)
-        slept_yesterday = sleep_char[0]
-        player = sleep_char[1]
+        player = character.update_player_location(player)
 
-    if player["location"] == 26:
+    if player["location"] == 25:
         exam_state = exam.exam(1)
         player_attribute_adjustments.exam_event_adjustment(player, exam_state)
     if player["time"] < 5:
