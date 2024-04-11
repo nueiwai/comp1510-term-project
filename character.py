@@ -100,43 +100,35 @@ def is_enrolled(player):
     return player['GPA'] >= 2.0
 
 
-def update_player_location(player, slept_yesterday):
+def update_player_location(player):
     """
     Update the player's location based on whether the player sleeps that day.
 
     :param player: a dictionary that stores the character's attributes
-    :param slept_yesterday: a boolean that indicates if the player slept yesterday
     :precondition: player must be a dictionary with keys "time", "GPA", "social", and "location"
-    :precondition: slept_yesterday must be a boolean
     :postcondition: correctly adjust the player's location in the event the player chooses to sleep
-    :postcondition: correctly print the narrative according to whether the player slept yesterday
     :return: a list containing the updated slept_yesterday boolean and the player dictionary
     """
-    if slept_yesterday is False:
-        sleep_through = input(f"Do you want to sleep today? (Y/N): ").upper()
-        if sleep_through == "Y":
-            player["location"] += 1  # skip one day sleeping
-            print(f"Oops. You slept through the entire day. Your location on the map is updated.")
-            slept_yesterday = True
-        elif sleep_through == "N":
-            print(f"You chose not to sleep...you probably should have slept though. Location on the map is unchanged.")
-        else:
-            print(f"That was an invalid input. Please enter either 'Y' or 'N'.")
+    while True:
+        try:
+            sleep_through = input(f"Do you want to sleep now? (Y/N): ").strip().upper()
+            if not sleep_through.isalpha() or sleep_through == "":
+                raise ValueError(f"That was an invalid choice. Input must be 'Y' or 'N'.")
+            break
+        except ValueError as error:
+            print(error)
+    if sleep_through == "Y":
+        player["location"] += 1  # skip one day sleeping
+        print(f"Oops. You slept through the entire day. Your location on the map is updated.")
+        return player
     else:
-        sleep_through = input(f"Do you want to sleep today? (Y/N): ").upper()
-        if sleep_through == "Y":
-            print(f"You slept yesterday so~ sorry, you have work to do today. Your location on the map is unchanged.")
-        elif sleep_through == "N":
-            print(f"I guess that makes sense. You DID sleep yesterday. Just take a nap later.")
-        else:
-            print(f"That was an invalid input. Please enter either 'Y' or 'N'.")
-    return [slept_yesterday, player]
+        print(f"You chose not to sleep...you probably should have slept though.")
+        return player
 
 
 def test_run_sleep():
     player = {"time": 85, "GPA": 3.2, "social": 60, "location": 26}
-    slept_yesterday = False
-    update_player_location(player, slept_yesterday)
+    update_player_location(player)
 
 
 if __name__ == "__main__":
