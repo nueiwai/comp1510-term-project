@@ -39,30 +39,39 @@ def generate_code_snippet_options(term):
         ]
     elif term == 2:
         return [
-            f"result = math.factorial(5)",
-            f"print('Factorial of 5 is:', result)",
-            f"import math",
-            f"ph = 6\n",
-            f"if ph < 7.0:\n\t",
-            f"print('It is acidic')"
+            f"import random\n",
+            f"number = random.randint(1, 10)\n",
+            f"print('Random number between 1 and 10 is:', number)\n",
+            f"temp = 30\n",
+            f"if temp > 25:\n\t",
+            f"print('It is warm')"
         ]
     elif term == 3:
         return [
-            f"result = math.factorial(5)",
-            f"print('Factorial of 5 is:', result)",
-            f"import math",
-            f"ph = 6\n",
-            f"if ph < 7.0:\n\t",
-            f"print('It is acidic')"
+            f"import random\n",
+            f"number = random.randint(1, 10)\n",
+            f"print('Random number between 1 and 10 is:', number)\n",
+            f"temp = 30\n",
+            f"if temp > 25:\n",
+            f"\tprint('It is warm')\n",
+            f"else:\n",
+            f"\tprint('It is not warm')\n",
+            f"for count in range(5):\n",
+            f"\tprint('Iteration:', count)"
         ]
     elif term == 4:
         return [
-            f"result = math.factorial(5)",
-            f"print('Factorial of 5 is:', result)",
-            f"import math",
-            f"ph = 6\n",
-            f"if ph < 7.0:\n\t",
-            f"print('It is acidic')"
+            f"import random\n",
+            f"num_list = []\n",
+            f"for _ in range(5):\n",
+            f"\tnum_list.append(random.randint(1, 10))\n",
+            f"print('Random numbers:', num_list)\n",
+            f"even_numbers = [num for num in num_list if num % 2 == 0]\n",
+            f"print('Even numbers:', even_numbers)\n",
+            f"total = sum(num_list)\n",
+            f"print('Sum of all numbers:', total)\n",
+            f"average = total / len(num_list)\n",
+            f"print('Average of numbers:', average)"
         ]
 
 
@@ -85,7 +94,7 @@ def execute_chosen_code_snippets(chosen_snippets):
     exec(code_string)
 
 
-def exam(term=1):
+def exam(term=4):
     """
     Drive the main function for the final boss challenge.
     """
@@ -95,14 +104,14 @@ def exam(term=1):
     try:
         execute_chosen_code_snippets(chosen_snippets)
     except ValueError:
-        print(f"Code snippet crashed. failed the {term} exam.")
+        print(f"Code snippet crashed. failed the term {term} exam.")
         state = False
     except NameError:
-        print(f"Code snippet crashed. failed the {term} exam.")
+        print(f"Code snippet crashed. failed the term {term} exam.")
         state = False
     else:
-        print("Congratulations. You passed the exam!")
-        print("Let's move on to the next term.")
+        print(f"Congratulations. You passed the exam!")
+        print(f"Let's move on to the next term.")
         state = True
     return state
 
