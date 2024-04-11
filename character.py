@@ -80,15 +80,6 @@ def check_if_graduated_this_term(player):
         return False
 
 
-def quiz_question():
-    """
-    Generate a quiz question that draws from a question bank to ask the player.
-    """
-    questions = ['question 1', 'question 2', 'question 3', 'question 4', 'question 5']
-    random.shuffle(questions)
-    return questions[0]
-
-
 def is_enrolled(player):
     """
     Evaluate if the player is still enrolled in the program as a student.
@@ -119,6 +110,7 @@ def update_player_location(player, slept_yesterday):
     :precondition: slept_yesterday must be a boolean
     :postcondition: correctly adjust the player's location in the event the player chooses to sleep
     :postcondition: correctly print the narrative according to whether the player slept yesterday
+    :return: a list containing the updated slept_yesterday boolean and the player dictionary
     """
     if slept_yesterday is False:
         sleep_through = input(f"Do you want to sleep today? (Y/N): ").upper()
@@ -138,7 +130,7 @@ def update_player_location(player, slept_yesterday):
             print(f"I guess that makes sense. You DID sleep yesterday. Just take a nap later.")
         else:
             print(f"That was an invalid input. Please enter either 'Y' or 'N'.")
-    return slept_yesterday
+    return [slept_yesterday, player]
 
 
 def test_run_sleep():

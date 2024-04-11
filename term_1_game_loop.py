@@ -4,6 +4,7 @@ import events_and_games_triggers
 import player_attribute_adjustments
 import character
 import narrative
+import exam
 
 
 def term_1_game_loop():
@@ -19,7 +20,7 @@ def term_1_game_loop():
     social_limit = 100
     slept_yesterday = False
 
-    while player["location"] < 26 and player["time"] > 0 and player["GPA"] < 4.0:
+    while player["location"] < 26 and player["time"] > 5 and player["GPA"] < 4.0:
         map_components.print_game_map(player)
         map_components.describe_current_location(game_map, player)
 
@@ -40,13 +41,14 @@ def term_1_game_loop():
         player = sleep_char[1]
 
     if player["location"] == 26:
-        # Exam loop
+        exam_state = exam.exam(1)
+        player_attribute_adjustments.exam_event_adjustment(player, exam_state)
     if player["time"] < 5:
-       if player["GPA"] >= 2.8:
-          narrative.print_gradually("You have met the GPA requirement to graduate this term. Checking social status...")
-          if player["social"]
-          narrative.waiting(3)
-
+        if player["GPA"] >= 2.8:
+            narrative.print_gradually("You have met the GPA requirement to graduate this term. Checking social status")
+            if player["social"] >= 100:
+                narrative.print_gradually("You have met the social requirement to graduate this term. Congratulations! "
+                                          "You have graduated this term.")
 
 
 if __name__ == "__main__":

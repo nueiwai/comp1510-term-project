@@ -1,4 +1,17 @@
 import random
+"""
+This module contains:
+
+Games:
+- Base Conversion: Converts decimal numbers to other bases.
+- Roman Numeral Conversion: Translates decimal numbers into Roman numerals.
+- Caesar Cipher: Enciphers or deciphers messages using the Caesar cipher.
+
+Functions:
+- Conversion Functions for Games: `decimal_to_base()`, `roman_numeral_converter()`, `caesarcipher()`
+- Game Drivers: `play_base_conversion_game()`, `play_roman_numeral_conversion_game()`, `play_caesar_cipher_game()`
+- Support Functions: Functions for generating question choices and validating player responses for each game.
+"""
 
 
 def decimal_to_base(decimal_num, base):
@@ -202,7 +215,7 @@ def select_message_list(term):
     term1 = ["Cat", "Dog", "Mop", "Hot"]
     term2 = ["Great Wall", "Magic Wand", "Heavy Rain", "Sweet Home"]
     term3 = ["Summer Sun", "Forest Owl", "Public Eye", "Silver Fox", "Golden Gate"]
-    term4 = ["Feedback Loop", "Breakfast Nook ", "Colorful Bird", "Mountain Peak", "American Eagle "]
+    term4 = ["Feedback Loop", "Breakfast Nook ", "Colorful Bird", "Mountain Peak", "American Eagle"]
 
     if term == 1:
         return term1

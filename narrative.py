@@ -26,6 +26,18 @@ def print_gradually(text):
     print()
 
 
+def waiting(count_ticktock):
+    """
+    Display the narrative 'waiting.'
+    """
+    print_gradually(f"Waiting . . .")
+    for _ in range(count_ticktock):
+        print('Tick')
+        time.sleep(1)
+        print('Tock')
+        time.sleep(1)
+
+
 def co_op_term():
     """
     Display the narrative 'co-op.'
@@ -53,7 +65,9 @@ def bonus_part(character):
 def welcome_message():
     print("Welcome Player. You will be role playing as a computing student in this game. There will be a lot of "
           "challenges for you. Make sure to manage your life well. Balance of your life is the key to success in this "
-          "game.")
+          "game."
+          "You need to graduate from the program to win the game. "
+          "You will be taking quizzes, attending events")
     f = pyfiglet.figlet_format("Computing Ranger", font="slant")
     print(f)
 

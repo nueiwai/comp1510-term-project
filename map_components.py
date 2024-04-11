@@ -1,4 +1,4 @@
-def generate_term_map(total_cell):
+def generate_term_map(total_cell=100):
     """
     Generate a dictionary of cell numbers as keys their respective term, day of term, and week of term as value.
 
@@ -63,7 +63,7 @@ def add_player_location_to_map(row_content, cell, player):
 
     """
     if cell == player["location"]:
-        row_content += "║{:^7}".format("𒊹")
+        row_content += "║{:^7}".format("✎")
     else:
         row_content += "║       "
     return row_content
@@ -125,7 +125,7 @@ def print_game_map(player):
         else:
             ascii_board += "╚" + "═══════╩" * (columns - 1) + "═══════╝\n"  # add the bottom border when it's last row
 
-    return ascii_board
+    print(ascii_board)
 
 
 def describe_current_location(game__map, player):
@@ -156,7 +156,7 @@ def describe_current_location(game__map, player):
 def test_run_map():
     game_map = generate_term_map(100)
     player = {"time": 100, "GPA": 1.8, "social": 50, "location": 22}
-    print(print_game_map(player))
+    print_game_map(player)
     describe_current_location(game_map, player)
 
 

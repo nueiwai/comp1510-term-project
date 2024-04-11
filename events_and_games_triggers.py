@@ -3,6 +3,7 @@ import itertools
 import mini_games
 import player_attribute_adjustments
 
+
 def distribute_sick_events_each_term(base_frequency=1, extra_frequency=2):
     """
 
@@ -72,16 +73,15 @@ def trigger_assignment(player, player_choice):
 
 
 def sick_event(player, time_lost):
+    text = (f"You slept for three days to feel better..."
+            f"Now you have {player['GPA']} GPA points, {player['social']} social score and {player['time']} units of "
+            f"time left.")
     if time_lost > 7:
         player["location"] += 3
-        print(f"You had a very severe sickness. You lost {time_lost} units of time."
-              f"You slept for three days to feel better...")
+        print(f"You had a very severe sickness. You lost {time_lost} units of time." + text)
     elif time_lost > 4:
-        print(f"You had a severe sickness. You lost {time_lost} units of time."
-              f"You slept for three days to feel better...")
+        print(f"You had a severe sickness. You lost {time_lost} units of time." + text)
     elif time_lost > 2:
-        print(f"You had a mild sickness. You lost {time_lost} units of time."
-              f"You slept for three days to feel better...")
+        print(f"You had a mild sickness. You lost {time_lost} units of time." + text)
     else:
-        print(f"You had a minor sickness. You lost {time_lost} units of time."
-              f"You slept for three days to feel better...")
+        print(f"You had a minor sickness. You lost {time_lost} units of time." + text)
