@@ -21,7 +21,7 @@ def make_character():
     >>> test_player
     {'time': 100, 'GPA': 3.5, 'social': 50, 'location': 1}
     """
-    return {'time': 4, 'GPA': 2.7, 'social': 20, 'location': 25}
+    return {'time': 100, 'GPA': 3.5, 'social': 50, 'location': 1}
 
 
 def make_character_each_term_start(player):
@@ -100,16 +100,21 @@ def is_enrolled(player):
     return player['GPA'] >= 2.0
 
 
-def update_player_location(player):
+def update_player_location(player, accomplishment_state=False):
     """
     Update the player's location based on whether the player sleeps that day.
 
     :param player: a dictionary that stores the character's attributes
+    :param accomplishment_state: a boolean that determines if the player has accomplished something that day
     :precondition: player must be a dictionary with keys "time", "GPA", "social", and "location"
     :postcondition: correctly adjust the player's location in the event the player chooses to sleep
     :return: a list containing the updated slept_yesterday boolean and the player dictionary
     """
-    while True:
+    if not accomplishment_state:
+        print(f"You did not accomplish anything today. Need to work on something before you sleep.\nDon't waste time!!")
+        return player
+
+    while accomplishment_state:
         try:
             sleep_through = input(f"Do you want to sleep now? (Y/N): ").strip().upper()
             if not sleep_through.isalpha() or sleep_through == "":
@@ -117,9 +122,10 @@ def update_player_location(player):
             break
         except ValueError as error:
             print(error)
+
     if sleep_through == "Y":
-        player["location"] += 1  # skip one day sleeping
-        print(f"Oops. You slept through the entire day. Your location on the map is updated.")
+        player["location"] += 2  # skip two day sleeping
+        print(f"Oops. You slept through the entire day. Your woke up with full energy.")
         return player
     else:
         print(f"You chose not to sleep...you probably should have slept though.")

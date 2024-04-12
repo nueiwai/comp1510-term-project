@@ -212,14 +212,26 @@ def select_message_list(term):
 
 
     >>> select_message_list(1)
-    ['Cat', 'Dog', 'Bird', 'Chris']
+    ['Cat', 'Dog', 'Mop', 'Hot', 'Sun', 'Was', 'Pie', 'Rio', 'bat', 'hog', 'top', 'cot', 'hat', 'fox', 'pot', 'rat',
+    'log', 'pop', 'bit', 'sob', 'jet', 'rub', 'dip', 'hum', 'lot', 'gap', 'fib', 'wet']
     >>> select_message_list(4)
-    ['Complexity and Algorithms', 'Cloud Computing Introduction', 'Cryptography and Network Security']
+    ['Feedback Loop', 'Breakfast Nook', 'Colorful Bird', 'Mountain Peak', 'American Eagle', 'Sunflower Seed',
+    'Overnight Stay', 'Homeschool Room', 'Waterfall Drop', 'Elevator Shaft', 'Underpass Road', 'Butterfly Wing',
+    'Crossover Gate', 'Telescope Lens', 'Riverbank Edge', 'Chocolate Cake', 'Grasslands Park', 'Crossroad Path',
+    'Staircase Rise', 'Lightning Bolt']
     """
-    term1 = ["Cat", "Dog", "Mop", "Hot"]
-    term2 = ["Great Wall", "Magic Wand", "Heavy Rain", "Sweet Home"]
-    term3 = ["Summer Sun", "Forest Owl", "Public Eye", "Silver Fox", "Golden Gate"]
-    term4 = ["Feedback Loop", "Breakfast Nook ", "Colorful Bird", "Mountain Peak", "American Eagle"]
+    term1 = ["Cat", "Dog", "Mop", "Hot", "Sun", "Was", "Pie", "Rio", "bat", "hog", "top", "cot", "hat", "fox", "pot",
+             "rat", "log", "pop", "bit", "sob", "jet", "rub", "dip", "hum", "lot", "gap", "fib", "wet"]
+    term2 = ["Great Wall", "Magic Wand", "Heavy Rain", "Sweet Home", "White Gate", "Royal Port", "Sharp Turn",
+             "Black Pool", "Light Snow", "Grand Hall", "Green Park", "Quick Sand", "Small Pond", "Large Rock",
+             "Brave Soul", "Clear Path", "Brown Bear", "Fresh Fish", "Proud Lion", "Round Lake"]
+    term3 = ["Summer Sun", "Forest Owl", "Public Eye", "Silver Fox", "Golden Key", "Frozen Air", "Travel Map",
+             "Wintery Mix", "Window Bay", "Market Day", "Flower Pot", "Master Key", "Jungle Cat", "Garden Hoe",
+             "Coffee Mug", "Pillow Top", "Dinner Set", "Office Pen", "Dessert Bar", "Candle Wax"]
+    term4 = ["Feedback Loop", "Breakfast Nook", "Colorful Bird", "Mountain Peak", "American Eagle",  "Sunflower Seed",
+             "Overnight Stay", "Homeschool Room", "Waterfall Drop", "Elevator Shaft", "Underpass Road",
+             "Butterfly Wing", "Crossover Gate", "Telescope Lens", "Riverbank Edge", "Chocolate Cake",
+             "Grasslands Park", "Crossroad Path", "Staircase Rise", "Lightning Bolt"]
 
     if term == 1:
         return term1

@@ -1,4 +1,5 @@
 import random
+import narrative
 
 
 def adjust_gpa(gpa, change):
@@ -95,12 +96,11 @@ def assignment_event_adjustment(player):
     >>> assignment_event_adjustment({"time": 50, "GPA": 3.9, "social": 50})
     {'time': 45, 'GPA': 4.0, 'social': 50}
     """
-    player["time"] -= 5
+    player["time"] -= 10
     player["GPA"] = adjust_gpa(player["GPA"], 0.1)
-    player["location"] += 1
     print(f"You have completed an assignment, Great Job!\n"
-          f"You have earned 0.1 GPA points and lost 5 units of time in the process.\n"
-          f"Now you have {player['GPA']} GPA points and {player['time']} units of time left.\n"
+          f"You have earned 0.1 GPA points and lost 10 units of time in the process.\n"
+          f"Now you have {player['GPA']:.2f} GPA points and {player['time']} units of time left.\n"
           f"Remember you need to balance your time, GPA and social to graduate.\n")
     return player
 
@@ -126,19 +126,16 @@ def exam_event_adjustment(player, state):  # state True == pass, state False == 
     player["time"] -= 15
     if state is True:
         player["GPA"] = adjust_gpa(player["GPA"], 0.2)
-        player["location"] += 1
         print(f"You have passed the exam. Congratulations!\n"
               f"You have earned 0.2 GPA points.\n"
-              f"You have lost 15 units of time.\n"
               f"Now you have {player['GPA']} GPA points and {player['time']} units of time left.\n")
 
     else:
         player["GPA"] = adjust_gpa(player["GPA"], - 0.2)
         print(f"You have failed the exam. You have lost 0.2 GPA points.\n"
-              f"You have lost 15 units of time.\n"
-              f"Let's calculate your status.... to see if you need a recovery exam.\n"
               f"Remember you need to balance your time and GPA and social to graduate.\n"
-              f"Now you have {player['GPA']} GPA points and {player['time']} units of time left.\n")
+              f"You failed the ultimate test. You are leaving the school.\n")
+
     return player
 
 
@@ -160,7 +157,7 @@ def study_session_event_adjustment(player, social_limit):
     >>> study_session_event_adjustment({"time": 80, "GPA": 3.95, "social": 10}, 80)
     {'time': 72, 'GPA': 4.0, 'social': 5}
     """
-    player["time"] -= 8
+    player["time"] -= 15
     player["GPA"] = adjust_gpa(player["GPA"], 0.05)
     player["social"] = adjust_social(player["social"], -5, social_limit)
     player["location"] += 1
@@ -191,7 +188,7 @@ def social_event_adjustment(player, social_limit):
     {'time': 80, 'GPA': 1.92, 'social': 70}
 
     """
-    player["time"] -= 10
+    player["time"] -= 15
     player["GPA"] = adjust_gpa(player["GPA"], -0.08)
     player["social"] = adjust_social(player["social"], 10, social_limit)
     player["location"] += 1
@@ -244,8 +241,11 @@ def volunteering_event_adjustment(player, social_limit):
     """
     player["time"] -= 20
     player["GPA"] = adjust_gpa(player["GPA"], 0.05)
-    player["social"] = adjust_social(player["social"], 15, social_limit)
-    print("You have done volunteering for the Day Care Center. You had a very great time.")
+    player["social"] = adjust_social(player["social"], 30, social_limit)
+    narrative.print_gradually(f"You have done volunteering for the Day Care Center. You had a very great time.\n"
+                              f"You have earned 0.05 GPA points and 30 units of social score in the process.\n"
+                              f"Now you have {player['GPA']} GPA points, {player['social']} social score and\n"
+                              f"Remember you need to balance your time, GPA and social to graduate.")
     return player
 
 
