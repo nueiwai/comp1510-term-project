@@ -63,7 +63,7 @@ def add_player_location_to_map(row_content, cell, player):
 
     """
     if cell == player["location"]:
-        row_content += "║{:^7}".format("✎")
+        row_content += "║{:^7}".format("Iam")
     else:
         row_content += "║       "
     return row_content
@@ -125,7 +125,7 @@ def print_game_map(player):
         else:
             ascii_board += "╚" + "═══════╩" * (columns - 1) + "═══════╝\n"  # add the bottom border when it's last row
 
-    print(ascii_board)
+    print(f"\n\n{ascii_board}\n\n")
 
 
 def describe_current_location(game__map, player):
