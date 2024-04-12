@@ -9,11 +9,11 @@ Other narrative, ascii art related components of the game will also go here.
 """
 
 
-def check_met_criteria(character):
+def check_met_criteria(player):
     """
     Check if the player meets the criteria to enter bonus level (co-op).
     """
-    return character['GPA'] >= 3.8
+    return player['GPA'] >= 3.5
 
 
 def print_gradually(text):
@@ -52,11 +52,11 @@ def co_op_term():
     print_gradually(f"Looks like it's time to get back to work . . .")
 
 
-def bonus_part(character):
+def bonus_part(player):
     """
     Drive the bonus part of the game.
     """
-    if check_met_criteria(character):
+    if check_met_criteria(player):
         co_op_term()
     else:
         print(f"Sorry, you did not meet the criteria to go into co-op. Chin-up! Grades aren't everything.")
