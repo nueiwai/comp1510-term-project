@@ -24,7 +24,7 @@ def adjust_gpa(gpa, change):
     elif updated_gpa < 0:
         return 0
     else:
-        return round(updated_gpa, 2)
+        return updated_gpa
 
 
 def adjust_social(social, change, limit):
@@ -98,11 +98,10 @@ def assignment_event_adjustment(player):
     player["time"] -= 5
     player["GPA"] = adjust_gpa(player["GPA"], 0.1)
     player["location"] += 1
-    print(f"You have completed an assignment, Great Job! "
-          f"You have earned 0.1 GPA points "
-          f"and lost 5 units of time in the process. "
-          f"Remember you need to balance your time and GPA to graduate. "
-          f"Now you have {player['GPA']} GPA points and {player['time']} units of time left.")
+    print(f"You have completed an assignment, Great Job!\n"
+          f"You have earned 0.1 GPA points and lost 5 units of time in the process.\n"
+          f"Now you have {player['GPA']} GPA points and {player['time']} units of time left.\n"
+          f"Remember you need to balance your time, GPA and social to graduate.\n")
     return player
 
 
@@ -128,19 +127,18 @@ def exam_event_adjustment(player, state):  # state True == pass, state False == 
     if state is True:
         player["GPA"] = adjust_gpa(player["GPA"], 0.2)
         player["location"] += 1
-        print(f"You have passed the exam. Congratulations!"
-              f"You have earned 0.2 GPA points."
-              f"You have lost 15 units of time."
-              f"Now you have {player['GPA']} GPA points and {player['time']} units of time left.")
+        print(f"You have passed the exam. Congratulations!\n"
+              f"You have earned 0.2 GPA points.\n"
+              f"You have lost 15 units of time.\n"
+              f"Now you have {player['GPA']} GPA points and {player['time']} units of time left.\n")
 
     else:
         player["GPA"] = adjust_gpa(player["GPA"], - 0.2)
-        print(f"You have failed the exam. You have lost 0.2 GPA points."
-              f"You have lost 15 units of time."
-              f"Let's calculate your status.... to see if you need a recovery exam."
-              f"Remember you need to balance your time and GPA and social to graduate."
-              f"Now you have {player['GPA']} GPA points and {player['time']} units of time left.")
-    print()
+        print(f"You have failed the exam. You have lost 0.2 GPA points.\n"
+              f"You have lost 15 units of time.\n"
+              f"Let's calculate your status.... to see if you need a recovery exam.\n"
+              f"Remember you need to balance your time and GPA and social to graduate.\n"
+              f"Now you have {player['GPA']} GPA points and {player['time']} units of time left.\n")
     return player
 
 
@@ -171,7 +169,6 @@ def study_session_event_adjustment(player, social_limit):
     print(f"Remember you need to balance your time and GPA and social to graduate. ")
     print(f"Now you have {player['GPA']} GPA points, {player['social']} social score and {player['time']} units of time"
           f"left.")
-
     return player
 
 
@@ -218,10 +215,11 @@ def sick_event_adjustment(player, social_limit):
     :postcondition: reduce player's time by a random amount in range [1, 10], GPA by 0.2 and social score by 15
     :return: the updated player dictionary and value of time key
     """
-    player["time"] -= random.randint(1, 10)  # Random time reduction between 1 and 10 (severeness)
+    time_lost = random.randint(1, 10)
+    player["time"] -= time_lost  # Random time reduction between 1 and 10 (severeness)
     player["GPA"] = adjust_gpa(player["GPA"], -0.2)
     player["social"] = adjust_social(player["social"], -15, social_limit)
-    return [player, player["time"]]
+    return [player, time_lost]
 
 
 def volunteering_event_adjustment(player, social_limit):

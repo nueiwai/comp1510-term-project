@@ -58,11 +58,11 @@ def generate_choices_for_base_conversion(correct_answer, base):
     return choices_base_conversion
 
 
-def play_base_conversion_game(gpa, number_upperbound, base_upperbound):
+def play_base_conversion_game(player, number_upperbound, base_upperbound):
     """
     Run a game where the player converts a decimal number to a specified base.
 
-    :param gpa: The player's current GPA
+    :param player: A dictionary containing the player's attributes
     :param number_upperbound: the upper limit for the randomly generated decimal number
     :param base_upperbound: the upper limit for the base to which the decimal number should be converted
     :precondition: gpa must be a float representing the player's current GPA
@@ -70,6 +70,7 @@ def play_base_conversion_game(gpa, number_upperbound, base_upperbound):
     :precondition: base_upperbound must be an integer between 2 and 9 (2, 9]
     :postcondition: generate the question according to provided bounds, check the player's answer and if the player's
                     answer is incorrect, their GPA decreases by 0.05
+    :return: the updated player dictionary after evaluating the player's answer
     """
     # Upperbound is adjusted according to level
     decimal_number = random.randint(1, number_upperbound)
@@ -78,7 +79,8 @@ def play_base_conversion_game(gpa, number_upperbound, base_upperbound):
     correct_answer = decimal_to_base(decimal_number, base)
     choices = generate_choices_for_base_conversion(correct_answer, base)
     print(f"Convert the number {decimal_number} to base {base}. Here are your options:")
-    get_player_choice_and_evaluate(choices, correct_answer, gpa)
+    get_player_choice_and_evaluate(choices, correct_answer, player)
+    return player
 
 
 def roman_numeral_converter(number):
@@ -134,16 +136,17 @@ def generate_choices_for_roman_numeral(correct_answer, org_number):
     return choices_roman_numeral
 
 
-def play_roman_numeral_conversion_game(gpa, target_num_upbound):
+def play_roman_numeral_conversion_game(player, target_num_upbound):
     """
     Run a game where the player must convert a randomly generated decimal number to its Roman numeral.
 
-    :param gpa: player's current GPA
+    :param player: A dictionary containing the player's attributes
     :param target_num_upbound: the upper limit for generating the decimal number for conversion
     :precondition: gpa must be a floating-point number
     :precondition: target_num_upbound must be an integer greater than 1
     :postcondition: generate the question according to provided bounds, check the player's answer and if the player's
                     answer is incorrect, their GPA decreases by 0.05
+    :return: the updated player dictionary after evaluating the player's answer
     """
     print("You will need to answer the correct numeral!!")
 
@@ -152,7 +155,8 @@ def play_roman_numeral_conversion_game(gpa, target_num_upbound):
     correct_answer = roman_numeral_converter(target_number)
     choices = generate_choices_for_roman_numeral(correct_answer, target_number)
     print(f"Convert the number {target_number} to a Roman numeral. Here are your options:")
-    get_player_choice_and_evaluate(choices, correct_answer, gpa)
+    get_player_choice_and_evaluate(choices, correct_answer, player)
+    return player
 
 
 def caesarcipher(message, encode, shift):
@@ -239,11 +243,11 @@ def generate_caesar_cipher_variations(correct_message, all_messages):
     return choices_caesarcipher
 
 
-def play_caesar_cipher_game(gpa, term, shift_limit):
+def play_caesar_cipher_game(player, term, shift_limit):
     """
     Run a Caesar Cipher decryption game where a player attempts to decrypt an encrypted message using provided key.
 
-    :param gpa: player's current GPA
+    :param player: A dictionary containing the player's attributes
     :param term: term no. indicating the difficulty level
     :param shift_limit: The maximum shift value for the Caesar cipher
     :precondition: gpa must be a float representing the player's current GPA
@@ -251,7 +255,7 @@ def play_caesar_cipher_game(gpa, term, shift_limit):
     :precondition: shift_limit must be an integer greater than 0
     :postcondition: generate the question according to provided bounds, check the player's answer and if the player's
                     answer is incorrect, their GPA decreases by 0.05
-
+    :return: the updated player dictionary after evaluating the player's answer
     """
     print("Welcome. You will need to play the Caesar Cipher Decryption Game!")
 
@@ -264,16 +268,17 @@ def play_caesar_cipher_game(gpa, term, shift_limit):
 
     print(f"Try to Decrypt this message (key = {shift}: {encrypted_message}. Your options are:")
     message_choices = generate_caesar_cipher_variations(original_message, messages)
-    get_player_choice_and_evaluate(message_choices, original_message, gpa)
+    get_player_choice_and_evaluate(message_choices, original_message, player)
+    return player
 
 
-def get_player_choice_and_evaluate(choices, correct_answer, gpa):
+def get_player_choice_and_evaluate(choices, correct_answer, player):
     """
     Prompt the player to choose an answer from the given choices, validate the input, and evaluate the choice.
 
     :param choices: A dictionary with choice labels (e.g., "A", "B", "C") to their corresponding answers
     :param correct_answer: The correct answer string
-    :param gpa: Current player's gpa
+    :param player: A dictionary containing the player's attributes
     :precondition: choices and correct_answer must be a non-empty string
     :postcondition: get player's choice from input and compare it with correct answer and adjust player's gpa
     :return: player's updated gpa
@@ -297,15 +302,21 @@ def get_player_choice_and_evaluate(choices, correct_answer, gpa):
     # Evaluate the player's choice after a valid input
     if choices_allowed[int(player_choice)] == correct_answer:
         print("Correct! Well done. Keep up the good work.")
-        return gpa
+        return player
     else:
-        gpa -= 0.05  # Decrease GPA by 0.05 for an incorrect guess
+        player["GPA"] -= 0.05  # Decrease GPA by 0.05 for an incorrect guess
         print(f"Incorrect! The correct answer was {correct_answer}.")
-        print(f"Your GPA has decreased to {gpa:.2f}")
-        return gpa
+        print(f"Your GPA has decreased to {player["GPA"]:.2f}")
+        return player
 
 
 if __name__ == "__main__":
-    play_base_conversion_game(4.0, 125, 3)
-    play_roman_numeral_conversion_game(4.0, 10)
-    play_caesar_cipher_game(4.0, 1, 2)
+    # play_base_conversion_game(4.0, 125, 3)
+    # play_roman_numeral_conversion_game(4.0, 10)
+    # play_caesar_cipher_game(3.45, 1, 2)
+
+    player_1 = {'time': 100, 'GPA': 3.5, 'social': 50, 'location': 1}
+    while player_1["GPA"] > 2.8:
+        player_1 = play_base_conversion_game(player_1, 125, 3)
+        player_1 = play_roman_numeral_conversion_game(player_1, 10)
+        player_1 = play_caesar_cipher_game(player_1, 1, 2)

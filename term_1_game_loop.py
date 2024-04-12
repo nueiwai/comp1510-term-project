@@ -19,26 +19,29 @@ def term_1_game_loop():
     term = 1
     social_limit = 100
 
-    while player["location"] < 26 and player["time"] > 5 and player["GPA"] < 4.0:
+    while player["location"] < 25 and player["time"] > 5 and player["GPA"] < 4.0:
         map_components.print_game_map(player)
         map_components.describe_current_location(game_map, player)
 
         if player["location"] in sick_positions:
             time_lost = player_attribute_adjustments.sick_event_adjustment(player, social_limit)
-            events_and_games_triggers.sick_event(player, time_lost[1])
+            player = events_and_games_triggers.sick_event(player, time_lost[1])
 
         if player["location"] in volunteering_positions:
-            player_attribute_adjustments.volunteering_event_adjustment(player, social_limit)
+            player = player_attribute_adjustments.volunteering_event_adjustment(player, social_limit)
 
         player_choice_assignment = events_and_games_triggers.player_choice_for_event_participation("assignment")
-        events_and_games_triggers.trigger_assignment(player, player_choice_assignment)
+        player = events_and_games_triggers.trigger_assignment(player, player_choice_assignment)
 
-        events_and_games_triggers.trigger_quiz(player, term)
+        player_choice_study_session = events_and_games_triggers.player_choice_for_event_participation("study_session")
+        player = events_and_games_triggers.trigger_study_session(player, player_choice_study_session)
+
+        player = events_and_games_triggers.trigger_quiz(player, term)
 
         player = character.update_player_location(player)
 
-    if player["location"] == 25:
-        exam_state = exam.exam(1)
+    if player["location"] == 25 and player["time"] > 15 and player["GPA"] < 4.0:
+        exam_state = exam.exam(term)
         player_attribute_adjustments.exam_event_adjustment(player, exam_state)
     if player["time"] < 5:
         if player["GPA"] >= 2.8:

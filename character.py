@@ -21,7 +21,7 @@ def make_character():
     >>> test_player
     {'time': 100, 'GPA': 3.5, 'social': 50, 'location': 1}
     """
-    return {'time': 100, 'GPA': 3.5, 'social': 50, 'location': 1}
+    return {'time': 4, 'GPA': 2.7, 'social': 20, 'location': 25}
 
 
 def make_character_each_term_start(player):
@@ -128,7 +128,7 @@ def update_player_location(player):
 
 def test_run_sleep():
     player = {"time": 85, "GPA": 3.2, "social": 60, "location": 26}
-    update_player_location(player)
+    print(update_player_location(player))
 
 
 if __name__ == "__main__":

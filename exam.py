@@ -30,9 +30,9 @@ def generate_code_snippet_options(term):
     """
     if term == 1:
         return [
-            f"result = math.factorial(5)",
-            f"print('Factorial of 5 is:', result)",
-            f"import math",
+            f"result = math.factorial(5)\n",
+            f"print('Factorial of 5 is:', result)\n",
+            f"import math\n",
             f"ph = 6\n",
             f"if ph < 7.0:\n\t",
             f"print('It is acidic')"
