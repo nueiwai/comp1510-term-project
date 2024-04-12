@@ -55,27 +55,24 @@ def adjust_social(social, change, limit):
     return updated_social
 
 
-def adjust_time(time, change, limit):
+def adjust_time(time, change):
     """
     Adjust a player's time on the given change, ensuring it stays within 0 to limit.
     :param time: current time of the player
     :param change: amount to adjust the time by
-    :param limit: the max social value allowed
     :precondition: time must be an integer within the range 0 to limit
     :precondition: change must be an integer that can be positive or negative
     :postcondition: calculate time correctly, ensuring it stays within the range 0 to limit, inclusive
     :return: the adjusted time as an integer
 
-    >>> adjust_time(5, -3, 10)
+    >>> adjust_time(5, -3)
     2
-    >>> adjust_time(14, 5, 15)
+    >>> adjust_time(14, 5)
     15
-    >>> adjust_time(1, -5, 10)
+    >>> adjust_time(1, -5)
     0
     """
     updated_time = time + change
-    if updated_time > limit:
-        return limit
     if updated_time < 0:
         return 0
     return updated_time
@@ -96,7 +93,7 @@ def assignment_event_adjustment(player):
     >>> assignment_event_adjustment({"time": 50, "GPA": 3.9, "social": 50})
     {'time': 45, 'GPA': 4.0, 'social': 50}
     """
-    player["time"] -= 10
+    player["time"] = adjust_time(player["time"], -5)
     player["GPA"] = adjust_gpa(player["GPA"], 0.1)
     print(f"You have completed an assignment, Great Job!\n"
           f"You have earned 0.1 GPA points and lost 10 units of time in the process.\n"
@@ -157,14 +154,14 @@ def study_session_event_adjustment(player, social_limit):
     >>> study_session_event_adjustment({"time": 80, "GPA": 3.95, "social": 10}, 80)
     {'time': 72, 'GPA': 4.0, 'social': 5}
     """
-    player["time"] -= 15
+    player["time"] = adjust_time(player["time"], -15)
     player["GPA"] = adjust_gpa(player["GPA"], 0.05)
     player["social"] = adjust_social(player["social"], -5, social_limit)
     player["location"] += 1
     print(f"You have completed a study session. Great Job! ")
     print(f"You have earned 0.05 GPA points and lost 5 units of social score in the process. ")
     print(f"Remember you need to balance your time and GPA and social to graduate. ")
-    print(f"Now you have {player['GPA']} GPA points, {player['social']} social score and {player['time']} units of time"
+    print(f"Now you have {player['GPA']:.2f} GPA, {player['social']} social score and {player['time']} units of time"
           f"left.")
     return player
 
@@ -188,7 +185,7 @@ def social_event_adjustment(player, social_limit):
     {'time': 80, 'GPA': 1.92, 'social': 70}
 
     """
-    player["time"] -= 15
+    player["time"] = adjust_time(player["time"], -10)
     player["GPA"] = adjust_gpa(player["GPA"], -0.08)
     player["social"] = adjust_social(player["social"], 10, social_limit)
     player["location"] += 1
@@ -213,7 +210,7 @@ def sick_event_adjustment(player, social_limit):
     :return: the updated player dictionary and value of time key
     """
     time_lost = random.randint(1, 10)
-    player["time"] -= time_lost  # Random time reduction between 1 and 10 (severeness)
+    player["time"] = adjust_time(player["time"], -time_lost)  # Random time reduction between 1 and 10 (severeness)
     player["GPA"] = adjust_gpa(player["GPA"], -0.2)
     player["social"] = adjust_social(player["social"], -15, social_limit)
     return [player, time_lost]
@@ -239,7 +236,7 @@ def volunteering_event_adjustment(player, social_limit):
     You have done volunteering for the Day Care Center. You had a very great time.
     {'time': 160, 'GPA': 4.0, 'social': 20}
     """
-    player["time"] -= 20
+    player["time"] = adjust_time(player["time"], -20)
     player["GPA"] = adjust_gpa(player["GPA"], 0.05)
     player["social"] = adjust_social(player["social"], 30, social_limit)
     narrative.print_gradually(f"You have done volunteering for the Day Care Center. You had a very great time.\n"
@@ -270,7 +267,7 @@ def recovery_exam_event_adjustment(player, state):  # state is True when player 
     if state is False:
         print("You failed the recovery exam, so you are not graduating. Sorry.")
     else:
-        player["time"] -= 20
+        player["time"] = adjust_time(player["time"], -20)
         player["GPA"] = 2.8  # GPA is set to 2.8 for next year if player passes the recovery exam
         return player
 

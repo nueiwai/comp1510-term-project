@@ -65,7 +65,7 @@ def term_1_game_loop():
     if player["time"] < 10:
         if player["GPA"] >= 2.8:
             narrative.print_gradually("You have met the GPA requirement to graduate this term. Checking social status")
-            if player["social"] >= 100:
+            if player["social"] > 70:
                 narrative.print_gradually("You have met the social requirement to graduate this term. Congratulations! "
                                           "You have graduated this term.")
             else:
@@ -75,7 +75,7 @@ def term_1_game_loop():
         else:
             narrative.print_gradually("You didn't meet the GPA requirement to graduate this term. You have to drop out "
                                       "sorry.")
-    if player["time"] == 0:
+    elif player["time"] == 0:
         narrative.print_gradually("You have run out of time units. We will check your GPA for your eligibility to the"
                                   "next term.")
         if player["GPA"] >= 2.8:

@@ -31,7 +31,7 @@ def distribute_volunteering_events_each_term(location_triggers_sick, grid_start=
         if _ in locations_without_sick:
             locations_without_sick.remove(_)
 
-    locations_trigger_volunteering = random.choices(locations_without_sick, k=2)
+    locations_trigger_volunteering = random.choices(locations_without_sick, k=5)
     return locations_trigger_volunteering
 
 
