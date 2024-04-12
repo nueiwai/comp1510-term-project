@@ -125,7 +125,7 @@ def exam_event_adjustment(player, state):  # state True == pass, state False == 
         player["GPA"] = adjust_gpa(player["GPA"], 0.2)
         print(f"You have passed the exam. Congratulations!\n"
               f"You have earned 0.2 GPA points.\n"
-              f"Now you have {player['GPA']} GPA points and {player['time']} units of time left.\n")
+              f"Now you have {player['GPA']:.2f} GPA and {player['time']} units of time left.\n")
 
     else:
         player["GPA"] = adjust_gpa(player["GPA"], - 0.2)
@@ -192,7 +192,7 @@ def social_event_adjustment(player, social_limit):
     print(f"You have attended a social event. You made good connections at the event Great Job! "
           f"You have lost 0.08 GPA points and earned 10 units of social score in the process. "
           f"Remember you need to balance your time and GPA and social to graduate. "
-          f"Now you have {player['GPA']} GPA points, {player['social']} social score and {player['time']} units of time"
+          f"Now you have {player['GPA']:.2f} GPA, {player['social']} social score and {player['time']} units of time"
           f"left.")
     return player
 
@@ -270,19 +270,6 @@ def recovery_exam_event_adjustment(player, state):  # state is True when player 
         player["time"] = adjust_time(player["time"], -20)
         player["GPA"] = 2.8  # GPA is set to 2.8 for next year if player passes the recovery exam
         return player
-
-
-def vacation_event_adjustment(player, vac_length):
-    """
-    Adjust the player's attributes based on the outcome of a vacation, affecting time.
-    :param player: a dictionary representing the player's state, including "time" and "GPA"
-    :param vac_length: total vacacation length units
-    :precondition: player must be a dictionary that has a key "time" with its value int
-    :postcondition: increase the player's time according to the vac_length
-    :return: updated player dictionary
-    """
-    player["time"] += vac_length
-    return player
 
 
 def test_run_adjustments():

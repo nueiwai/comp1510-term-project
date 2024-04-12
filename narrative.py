@@ -1,4 +1,5 @@
 import time
+import map_components
 import pyfiglet
 
 """
@@ -63,13 +64,29 @@ def bonus_part(player):
 
 
 def welcome_message():
-    print("Welcome Player. You will be role playing as a computing student in this game. There will be a lot of "
-          "challenges for you. Make sure to manage your life well. Balance of your life is the key to success in this "
-          "game."
-          "You need to graduate from the program to win the game. "
-          "You will be taking quizzes, attending events")
+    print_gradually("Welcome Player. You will be role playing as a computing student in this game.\n"
+                    "There will be a lot of challenges for you. Make sure to manage your life well.\n Balance of your "
+                    "life is the key to success in this game.\nYou need to graduate from the program to win the game. "
+                    "\nYou will be taking quizzes, attending events")
     f = pyfiglet.figlet_format("Computing Ranger", font="slant")
     print(f)
+
+
+def drop_out():
+    # Print the dropout message with some encouragement and advice
+    print_gradually(f"Unfortunately, you failed the exam, you must leave the program due to failing the exam.")
+    print_gradually("This is not the end of your journey! Here are a few things you might consider:")
+    print_gradually("- Take some time off to gather your thoughts and decide your next steps.")
+    print_gradually("- Explore other educational opportunities or different fields that might suit your strengths.")
+    print_gradually("- Consider gaining some practical experience through internships or part-time jobs.")
+    print_gradually("- When ready, you can reapply or pursue alternative certification programs.")
+    return
+
+
+def print_map_repeatedly(player, game_map):
+    map_components.print_game_map(player)
+    map_components.describe_current_location(game_map, player)
+    return player
 
 
 if __name__ == "__main__":

@@ -45,15 +45,15 @@ def make_character_each_term_start(player):
     return player
 
 
-def check_for_instructors():
-    """
-    Generate an instructor encounter 25% of the time.
-
-    :postcondition: after each move, a random number is generated and 25% of the time, player encounters an instructor
-    :return: if an instructor is encountered or not as a bool
-    """
-    chance_of_encounter = random.random()
-    return chance_of_encounter <= 0.25
+# def check_for_instructors():
+#     """
+#     Generate an instructor encounter 25% of the time.
+#
+#     :postcondition: after each move, a random number is generated and 25% of the time, player encounters an instructor
+#     :return: if an instructor is encountered or not as a bool
+#     """
+#     chance_of_encounter = random.random()
+#     return chance_of_encounter <= 0.25
 
 
 def check_if_graduated_this_term(player):

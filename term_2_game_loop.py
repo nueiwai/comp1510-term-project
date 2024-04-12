@@ -1,4 +1,3 @@
-import narrative
 import map_components
 import events_and_games_triggers
 import player_attribute_adjustments
@@ -9,13 +8,15 @@ import term_3_game_loop
 
 
 def term_2_game_loop(player, co_op_evaluation_point):
-
-    sick_positions = events_and_games_triggers.distribute_sick_events_each_term(base_frequency=1, extra_frequency=0)
-    volunteering_positions = events_and_games_triggers.distribute_volunteering_events_each_term(sick_positions)
+    sick_positions = events_and_games_triggers.distribute_sick_events_each_term(base_frequency=1, extra_frequency=0,
+                                                                                grid_start=26, grid_end=44)
+    volunteering_positions = events_and_games_triggers.distribute_volunteering_events_each_term(sick_positions,
+                                                                                                grid_start=26,
+                                                                                                grid_end=44)
 
     player = character.make_character_each_term_start(player)
     game_map = map_components.generate_term_map()
-    term = 2
+    term = 3
     social_limit = 100
 
     while player["location"] < 50 and player["time"] > 5 and 2.8 <= player["GPA"] < 4.0:

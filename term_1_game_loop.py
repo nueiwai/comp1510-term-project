@@ -5,7 +5,7 @@ import player_attribute_adjustments
 import character
 import narrative
 import exam
-import term_2_game_loop
+import term_3_game_loop
 
 
 def term_1_game_loop():
