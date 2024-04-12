@@ -1,26 +1,24 @@
-from narrative import welcome_message
+import narrative
 import map_components
 import events_and_games_triggers
 import player_attribute_adjustments
 import character
 import narrative
 import exam
-import term_2_game_loop
+import term_3_game_loop
 
 
-def term_1_game_loop():
-
-    welcome_message()
+def term_2_game_loop(player, co_op_evaluation_point):
 
     sick_positions = events_and_games_triggers.distribute_sick_events_each_term(base_frequency=1, extra_frequency=0)
     volunteering_positions = events_and_games_triggers.distribute_volunteering_events_each_term(sick_positions)
 
-    player = character.make_character()
+    player = character.make_character_each_term_start(player)
     game_map = map_components.generate_term_map()
-    term = 1
+    term = 2
     social_limit = 100
 
-    while player["location"] < 25 and player["time"] > 5 and 2.8 <= player["GPA"] < 4.0:
+    while player["location"] < 50 and player["time"] > 5 and 2.8 <= player["GPA"] < 4.0:
         map_components.print_game_map(player)
         map_components.describe_current_location(game_map, player)
 
@@ -33,7 +31,7 @@ def term_1_game_loop():
         if player["location"] in volunteering_positions:
             player = player_attribute_adjustments.volunteering_event_adjustment(player, social_limit)
 
-        social_event_positions =[3, 8, 13, 18, 23]
+        social_event_positions = [28, 33, 38, 43, 48]
         if player["location"] in social_event_positions:
             player = player_attribute_adjustments.social_event_adjustment(player, social_limit)
             map_components.print_game_map(player)
@@ -54,25 +52,25 @@ def term_1_game_loop():
             player = character.update_player_location(player, False)
             continue
 
-    if player["location"] == 25:
+    if player["location"] == 50:
         exam_state = exam.exam(term)
         player_attribute_adjustments.exam_event_adjustment(player, exam_state)
         if not exam_state:
             pass
         else:
             print("you passed the exam")
-            player["location"] += 1  # add 1 grid to reach grid 26
-            co_op_evaluation_point = player  # store term 1 gpa for co-op evaluation
-            term_2_game_loop.term_2_game_loop(player, co_op_evaluation_point)
-    if player["time"] < 10:
+            narrative.bonus_part(co_op_evaluation_point)
+            player["location"] += 1  # add 1 grid to reach grid 51
+            term_3_game_loop.term_3_game_loop(player)
+    elif player["time"] < 10:
         if player["GPA"] >= 2.8:
             narrative.print_gradually("You have met the GPA requirement to graduate this term. Checking social status")
-            if player["social"] > 70:
+            if player["social"] > 90:
                 narrative.print_gradually("You have met the social requirement to graduate this term. Congratulations! "
                                           "You have graduated this term.")
-                player["location"] = 26  # assign grid 26 from anywhere in term 1
-                co_op_evaluation_point = player  # store term 1 gpa for co-op evaluation
-                term_2_game_loop.term_2_game_loop(player, co_op_evaluation_point)
+                narrative.bonus_part(co_op_evaluation_point)
+                player["location"] = 51  # assign grid 51 from anywhere in term 2
+                term_3_game_loop.term_3_game_loop(player)
             else:
                 narrative.print_gradually("You didn't meet the social requirement to graduate this term. You have to "
                                           "drop out sorry.")
@@ -85,13 +83,9 @@ def term_1_game_loop():
                                   "next term.")
         if player["GPA"] >= 2.8:
             narrative.print_gradually("You have met the GPA requirement to graduate this term. Checking social status")
-            player["location"] = 26  # assign grid 26 from anywhere in term 1
-            co_op_evaluation_point = player  # store term 1 gpa for co-op evaluation
-            term_2_game_loop.term_2_game_loop(player, co_op_evaluation_point)
+            narrative.bonus_part(co_op_evaluation_point)
+            player["location"] = 51  # assign grid 51 from anywhere in term 2
+            term_3_game_loop.term_3_game_loop(player)
         else:
             narrative.print_gradually("You didn't meet the GPA requirement to graduate this term. You have to drop out "
                                       "sorry.")
-
-
-if __name__ == "__main__":
-    term_1_game_loop()
