@@ -12,13 +12,18 @@ def exam_intro():
     Print the intro message to exam.
 
     >>> exam_intro()
-    Congratulations! You've come so far. Welcome (welcome?) to the final boss!
-    To defeat the boss, try your best to write a piece of code that will execute successfully.
-    When you're done choosing your lines of code, enter 'e' (for execute of course) to execute selections.
+    Congratulations on finishing the term! We are walking towards the exam room as we speak.
+    For the exam we are going to scale things up a bit from the quizzes...
+    To move on to the next term, try your best to write a piece of code that will execute successfully.
+    <BLANKLINE>
+    When you're done choosing your lines of code (in order!),
+    enter 'e' (for execute of course) to execute selections.
     """
-    print(f"Congratulations! You've come so far. Welcome (welcome?) to the final boss!")
-    print(f"To defeat the boss, try your best to write a piece of code that will execute successfully.")
-    print(f"When you're done choosing your lines of code, enter 'e' (for execute of course) to execute selections.")
+    print(f"Congratulations on finishing the term! We are walking towards the exam room as we speak.")
+    print(f"For the exam we are going to scale things up a bit from the quizzes...")
+    print(f"To move on to the next term, try your best to write a piece of code that will execute successfully.\n")
+    print(f"When you're done choosing your lines of code (in order!),")
+    print(f"enter 'e' (for execute of course) to execute selections.")
 
 
 def generate_code_snippet_options(term):
