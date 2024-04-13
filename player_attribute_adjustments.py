@@ -10,14 +10,14 @@ and volunteering.
 
 functions:
 - adjust_gpa(gpa, change)
-- adjust_social(social, change, limit)
+- adjust_social(social, change)
 - adjust_time(time, change)
 - assignment_event_adjustment(player)
 - exam_event_adjustment(player, state)
-- study_session_event_adjustment(player, social_limit)
-- social_event_adjustment(player, social_limit)
-- sick_event_adjustment(player, social_limit)
-- volunteering_event_adjustment(player, social_limit)
+- study_session_event_adjustment(player)
+- social_event_adjustment(player)
+- sick_event_adjustment(player)
+- volunteering_event_adjustment(player)
 - test_run_adjustments()
 """
 
@@ -50,13 +50,13 @@ def adjust_gpa(gpa, change):
 
 def adjust_social(social, change):
     """
-    Adjust a player's social score based on the given change, ensuring it stays within 0 to limit.
+    Adjust a player's social score based on the given change.
 
     :param social: current social score of the player
     :param change: amount to adjust the social score by
-    :precondition: social must be an integer within the range 0 to limit
+    :precondition: social must be an integer
     :precondition: change must be an integer that can be positive or negative
-    :postcondition: calculate social score correctly, ensuring it stays within the range 0 to limit, inclusive
+    :postcondition: calculate social score correctly
     :return: the adjusted social score as an integer
 
     >>> adjust_social(95, 10)
@@ -74,12 +74,12 @@ def adjust_social(social, change):
 
 def adjust_time(time, change):
     """
-    Adjust a player's time on the given change, ensuring it stays within 0 to limit.
+    Adjust a player's time on the given change.
     :param time: current time of the player
     :param change: amount to adjust the time by
-    :precondition: time must be an integer within the range 0 to limit
+    :precondition: time must be an integer
     :precondition: change must be an integer that can be positive or negative
-    :postcondition: calculate time correctly, ensuring it stays within the range 0 to limit, inclusive
+    :postcondition: calculate time correctly
     :return: the adjusted time as an integer
 
     >>> adjust_time(5, -3)
@@ -101,7 +101,7 @@ def assignment_event_adjustment(player):
 
     :param player: a dictionary representing the player's state, including "time" and "GPA"
     :precondition: player must be a dictionary with keys "time" and "GPA" and values as int and float, respectively
-    :postcondition: reduce player's time by 5 and increase GPA by 0.1
+    :postcondition: reduce player's time by 5 and increase GPA by 0.05
     :return: the updated player dictionary
 
     >>> assignment_event_adjustment({"time": 100, "GPA": 3.5, "social": 50})
@@ -178,7 +178,7 @@ def study_session_event_adjustment(player):
     :precondition: player must be a dictionary with keys "time", "GPA" and "social" values as int, float, and int
                    respectively
     :precondition: social_limit must be a positive int
-    :postcondition: reduce player's time by 8, increase GPA by 0.05 and reduce social score by 5
+    :postcondition: reduce player's time by 10, increase GPA by 1 and reduce social score by 5
     :return: the updated player dictionary
 
     >>> player1 = {"time": 120, "GPA": 2.8, "social": 50, "location": 4}
@@ -260,13 +260,13 @@ def sick_event_adjustment(player):
     :precondition: player must be a dictionary with keys "time", "GPA" and "social" values as int, float, and int
                    respectively
     :precondition: social_limit must be a positive int
-    :postcondition: reduce player's time by a random amount in range [1, 10], GPA by 0.2 and social score by 15
+    :postcondition: reduce player's time by a random amount in range [1, 10], GPA by 0.2 and social score by 10
     :return: the updated player dictionary and value of time key
     """
-    time_lost = random.randint(1, 10)
+    time_lost = random.randint(1, 11)
     player["time"] = adjust_time(player["time"], -time_lost)  # Random time reduction between 1 and 10 (severeness)
     player["GPA"] = adjust_gpa(player["GPA"], -0.2)
-    player["social"] = adjust_social(player["social"], -15)
+    player["social"] = adjust_social(player["social"], -10)
     return [player, time_lost]
 
 
@@ -281,14 +281,14 @@ def volunteering_event_adjustment(player):
     :postcondition: reduce player's time by 20, GPA by 0.05 and increase social score by 15
     :return: the updated player dictionary
 
-    >>> volunteering_event_adjustment({"time": 200, "GPA": 2.5, "social": 10}, 80)
+    >>> volunteering_event_adjustment({"time": 200, "GPA": 2.5, "social": 10})
     You have done volunteering for the Day Care Center. You had a very great time.
     You have earned 0.05 GPA points and 30 units of social score in the process.
     Now you have 2.55 points, 40 social score and
     Remember you need to balance your time, GPA and social to graduate.
     {'time': 180, 'GPA': 2.55, 'social': 40}
 
-    >>> volunteering_event_adjustment({"time": 180, "GPA": 3.95, "social": 5}, 80)
+    >>> volunteering_event_adjustment({"time": 180, "GPA": 3.95, "social": 5})
     You have done volunteering for the Day Care Center. You had a very great time.
     You have earned 0.05 GPA points and 30 units of social score in the process.
     Now you have 4.00 points, 35 social score and
@@ -300,8 +300,8 @@ def volunteering_event_adjustment(player):
     player["social"] = adjust_social(player["social"], 30)
     print_gradually(f"You have done volunteering for the Day Care Center. You had a very great time.\n"
                     f"You have earned 0.05 GPA points and 30 units of social score in the process.\n"
-                    f"Now you have {player['GPA']:.2f} points, {player['social']} social score and\n"
-                    f"Remember you need to balance your time, GPA and social to graduate.")
+                    f"Now you have {player['GPA']:.2f} points, {player['social']} social score and {player['time']}"
+                    f"left\nRemember you need to balance your time, GPA and social to graduate.")
     return player
 
 

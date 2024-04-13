@@ -98,7 +98,7 @@ def welcome_message():
                     "There will be a lot of challenges for you. Make sure to manage your life well.\n Balance of your "
                     "life is the key to success in this game.\nYou need to graduate from the program to win the game. "
                     "\nYou will be taking quizzes, attending events")
-    f = pyfiglet.figlet_format("Computing Ranger", font="slant")
+    f = pyfiglet.figlet_format("CST SIM", font="slant")
     print(f)
 
 
