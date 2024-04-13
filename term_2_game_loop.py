@@ -19,7 +19,7 @@ def term_2_game_loop(player, co_op_evaluation_point):
     game_map = map_components.generate_term_map()
     term = 2
 
-    while player["location"] < 75 and player["time"] > 5 and 2.8 <= player["GPA"] <= 4.0:
+    while player["location"] < 50 and player["time"] > 5 and 2.8 <= player["GPA"] <= 4.0:
         narrative.print_map_repeatedly(player, game_map)
 
         if player["location"] in sick_positions:
@@ -40,7 +40,7 @@ def term_2_game_loop(player, co_op_evaluation_point):
         if not slept:
             continue
 
-    if player["location"] == 75:
+    if player["location"] == 50:
         exam_state = exam.exam(term)
         player_attribute_adjustments.exam_event_adjustment(player, exam_state)
         if not exam_state:
