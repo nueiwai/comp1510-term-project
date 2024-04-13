@@ -19,7 +19,7 @@ def term_2_game_loop(player, co_op_evaluation_point):
     term = 3
     social_limit = 100
 
-    while player["location"] < 50 and player["time"] > 5 and 2.8 <= player["GPA"] <= 4.0:
+    while player["location"] < 50 and player["time"] > 5 and 2.8 <= player["GPA"] < 4.0:
         map_components.print_game_map(player)
         map_components.describe_current_location(game_map, player)
 
@@ -57,7 +57,7 @@ def term_2_game_loop(player, co_op_evaluation_point):
         exam_state = exam.exam(term)
         player_attribute_adjustments.exam_event_adjustment(player, exam_state)
         if not exam_state:
-            pass
+            narrative.drop_out()
         else:
             print("you passed the exam")
             narrative.bonus_part(co_op_evaluation_point)

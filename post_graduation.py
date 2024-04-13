@@ -1,4 +1,4 @@
-import final_boss
+import exam
 """
 This module contains:
 
@@ -115,9 +115,9 @@ def job_interview():
         question_completed += 1
         correct_answer, interviewer_message = select_interview_question(question_completed)
         code_snippets = generate_code_snippet_options_for_interview(question_completed)
-        chosen_snippets = final_boss.get_player_choice(code_snippets)
+        chosen_snippets = exam.get_player_choice(code_snippets)
         try:
-            correct_answer == final_boss.execute_chosen_code_snippets(chosen_snippets)
+            correct_answer == exam.execute_chosen_code_snippets(chosen_snippets)
         except ValueError:
             print(f"Code snippet crashed due to ValueError. Failed interview.")
             break

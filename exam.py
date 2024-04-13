@@ -1,4 +1,4 @@
-import final_boss
+
 """
 This module contains:
 
@@ -80,6 +80,29 @@ def generate_code_snippet_options(term):
         ]
 
 
+def get_player_choice(code_snippets):
+    """
+    Ask the player for their ordered choices and store them in a list.
+
+    :param code_snippets: a list containing the code snippets available for selection
+    """
+    chosen_snippets = []
+    while True:
+        display_code_snippet_options(code_snippets)
+        choice = input(f"Please enter the number of your choice or 'e' to execute your selections: ")
+        if choice.lower() == 'e':
+            break
+        try:
+            choice = int(choice)
+            if 1 <= choice <= len(code_snippets):
+                chosen_snippets.append(code_snippets[choice - 1])
+            else:
+                print(f"That was an invalid choice. Please enter a number between 1 and {len(code_snippets)}")
+        except ValueError:
+            print("That was an invalid input. Please enter a number or 'e'.")
+    return chosen_snippets
+
+
 def execute_chosen_code_snippets(chosen_snippets):
     """
     Execute the code snippets chosen in the order the player chose them, all at once.
@@ -99,13 +122,32 @@ def execute_chosen_code_snippets(chosen_snippets):
     exec(code_string)
 
 
+def display_code_snippet_options(code_snippets):
+    """
+    Print out a numbered list that displays all the available code snippets for the player to choose from.
+
+    :param code_snippets: a list containing the code snippets available for selection
+
+    >>> display_code_snippet_options(
+    ...     ['import math', 'result = math.factorial(5)', "print('Factorial of 5 is:', result)"])
+    <BLANKLINE>
+    Available code snippets to choose from:
+    1. import math
+    2. result = math.factorial(5)
+    3. print('Factorial of 5 is:', result)
+    """
+    print(f"\nAvailable code snippets to choose from:")
+    for count, code_snippet in enumerate(code_snippets):
+        print(f"{count + 1}. {code_snippet.strip()}")
+
+
 def exam(term=4):
     """
     Drive the main function for the final boss challenge.
     """
     exam_intro()
     code_snippets = generate_code_snippet_options(term)
-    chosen_snippets = final_boss.get_player_choice(code_snippets)
+    chosen_snippets = get_player_choice(code_snippets)
     try:
         execute_chosen_code_snippets(chosen_snippets)
     except SyntaxError:

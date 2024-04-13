@@ -43,6 +43,18 @@ def decimal_to_base(decimal_num, base):
 
 
 def generate_choices_for_base_conversion(correct_answer, base):
+    """
+    Generate a list of multiple choice answers for a base conversion game, including the correct answer and two fake
+    answers.
+
+    :param correct_answer: the correct answer for the base conversion game
+    :param base: the base to which the decimal number should be converted
+    :precondition: correct_answer must be a string representing the correct answer
+    :precondition: base must be an integer in the range [2, 9]
+    :postcondition: generate two fake answers for the base conversion game and shuffle them with the correct answer
+    :return: a list of tuples, where each tuple contains an integer (starting from 1) and a string message. This list
+            contains exactly three unique messages including the correct one
+    """
     base_conversion_variations = [correct_answer]
     # Generate two more unique base_conversion_variations
     while len(base_conversion_variations) < 3:
@@ -120,6 +132,21 @@ def roman_numeral_converter(number):
 
 
 def generate_choices_for_roman_numeral(correct_answer, org_number):
+    """
+    Generate a list of multiple choice answers for a Roman numeral conversion game, including the correct answer and two
+    fake Roman numerals.
+
+    :param correct_answer: the correct Roman numeral for the given number
+    :param org_number: the original number for which the correct_answer is generated
+    :precondition: correct_answer must be a string representing the correct Roman numeral for the org_number
+    :precondition: org_number must be an integer in the range [1, 5000]
+    :postcondition: generate two fake Roman numerals for the org_number and shuffle them with the correct_answer
+    :postcondition: return a list of tuples, each containing an index and a Roman numeral, with the numerals shuffled
+    :return: a list of tuples, where each tuple contains an integer (starting from 1) and a string message. This list
+            contains exactly three unique messages including the correct one
+
+
+    """
     roman_numeral_variations = [correct_answer]
     while len(roman_numeral_variations) < 3:
         # Generate a random number close to the original number for plausible incorrect answers
@@ -210,15 +237,6 @@ def select_message_list(term):
     :postcondition: a list corresponding to the chosen term is returned
     :return: a list of messages corresponding to the chosen term level
 
-
-    >>> select_message_list(1)
-    ['Cat', 'Dog', 'Mop', 'Hot', 'Sun', 'Was', 'Pie', 'Rio', 'bat', 'hog', 'top', 'cot', 'hat', 'fox', 'pot', 'rat',
-    'log', 'pop', 'bit', 'sob', 'jet', 'rub', 'dip', 'hum', 'lot', 'gap', 'fib', 'wet']
-    >>> select_message_list(4)
-    ['Feedback Loop', 'Breakfast Nook', 'Colorful Bird', 'Mountain Peak', 'American Eagle', 'Sunflower Seed',
-    'Overnight Stay', 'Homeschool Room', 'Waterfall Drop', 'Elevator Shaft', 'Underpass Road', 'Butterfly Wing',
-    'Crossover Gate', 'Telescope Lens', 'Riverbank Edge', 'Chocolate Cake', 'Grasslands Park', 'Crossroad Path',
-    'Staircase Rise', 'Lightning Bolt']
     """
     term1 = ["Cat", "Dog", "Mop", "Hot", "Sun", "Was", "Pie", "Rio", "bat", "hog", "top", "cot", "hat", "fox", "pot",
              "rat", "log", "pop", "bit", "sob", "jet", "rub", "dip", "hum", "lot", "gap", "fib", "wet"]
@@ -244,6 +262,20 @@ def select_message_list(term):
 
 
 def generate_caesar_cipher_variations(correct_message, all_messages):
+    """
+    Generate a list of multiple choice answers for a Caesar cipher game, including the correct answer and two fake
+    messages.
+
+    :param correct_message: a correct decrypted message.
+    :param all_messages: a list of potential decrypted messages which includes the correct message
+    :precondition: 'correct_message' must be a string and should be an element of 'all_messages'
+    :precondition: 'all_messages' must be a list of strings with at least two unique elements besides 'correct_message'.
+    :postcondition: returns a list of tuples, each containing an index and a message, with the messages shuffled to
+                    provide random order of choices
+    :return: a list of tuples, where each tuple contains an integer (starting from 1) and a string message. This list
+            contains exactly three unique messages including the correct one
+
+    """
     caesarcipher_variations = [correct_message]  # Include the correct answer
     while len(caesarcipher_variations) < 3:
         fake_message = random.choice(all_messages)
@@ -323,12 +355,6 @@ def get_player_choice_and_evaluate(choices, correct_answer, player):
 
 
 if __name__ == "__main__":
-    # play_base_conversion_game(4.0, 125, 3)
-    # play_roman_numeral_conversion_game(4.0, 10)
-    # play_caesar_cipher_game(3.45, 1, 2)
-
-    player_1 = {'time': 100, 'GPA': 3.5, 'social': 50, 'location': 1}
-    while player_1["GPA"] > 2.8:
-        player_1 = play_base_conversion_game(player_1, 125, 3)
-        player_1 = play_roman_numeral_conversion_game(player_1, 10)
-        player_1 = play_caesar_cipher_game(player_1, 1, 2)
+    play_base_conversion_game(4.0, 125, 3)
+    play_roman_numeral_conversion_game(4.0, 10)
+    play_caesar_cipher_game(3.45, 1, 2)

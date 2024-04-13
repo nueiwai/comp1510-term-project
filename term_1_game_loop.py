@@ -5,7 +5,7 @@ import player_attribute_adjustments
 import character
 import narrative
 import exam
-import term_2_game_loop
+import term_3_game_loop
 
 
 def term_1_game_loop():
@@ -91,7 +91,7 @@ def term_1_game_loop():
         else:
             narrative.print_gradually("You didn't meet the GPA requirement to graduate this term. You have to drop out "
                                       "sorry.")
-y
+
 
 if __name__ == "__main__":
     term_1_game_loop()

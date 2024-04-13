@@ -241,7 +241,7 @@ def volunteering_event_adjustment(player, social_limit):
     player["social"] = adjust_social(player["social"], 30, social_limit)
     narrative.print_gradually(f"You have done volunteering for the Day Care Center. You had a very great time.\n"
                               f"You have earned 0.05 GPA points and 30 units of social score in the process.\n"
-                              f"Now you have {player['GPA']} GPA points, {player['social']} social score and\n"
+                              f"Now you have {player['GPA']:.2f} points, {player['social']} social score and\n"
                               f"Remember you need to balance your time, GPA and social to graduate.")
     return player
 

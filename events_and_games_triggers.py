@@ -24,7 +24,7 @@ def distribute_sick_events_each_term(base_frequency=1, extra_frequency=2, grid_s
 
 def sick_event(player, time_lost):
     text = (f"You slept for three days to feel better...\n"
-            f"Now you have {player['GPA']} GPA points, {player['social']} social score and {player['time']} units of "
+            f"Now you have {player['GPA']:.2f} GPA points, {player['social']} social score and {player['time']} units of "
             f"time left.\n")
     if time_lost > 7:
         player["location"] += 3
@@ -139,15 +139,7 @@ def process_player_daily_events(player, term):
     # Trigger a quiz event
     player = trigger_quiz(player, term)
 
-    # Check conditions to update the player location
-
-    if player["location"] in [24, 49, 74, 99]:
-        player["location"] += 1
-        print("You slept through the day and woke up to a new day. Time to get back to work.")
-        return player, True
-
-    if ((not player_choice_assignment and player_choice_study_session) or
-            (not player_choice_study_session and player_choice_assignment)):
+    if not (player_choice_assignment and player_choice_study_session):
         player = character.update_player_location(player, True)
         return player, True
     else:
@@ -159,4 +151,3 @@ if __name__ == "__main__":
     game_player = {"time": 200, "GPA": 2.5, "social": 10, "location": 1}
     game_term = 1
     trigger_quiz(game_player, game_term)
-
