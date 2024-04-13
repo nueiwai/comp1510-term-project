@@ -108,6 +108,9 @@ def exam(term=4):
     chosen_snippets = final_boss.get_player_choice(code_snippets)
     try:
         execute_chosen_code_snippets(chosen_snippets)
+    except SyntaxError:
+        print(f"Code snippet crashed. failed the term {term} exam.")
+        state = False
     except ValueError:
         print(f"Code snippet crashed. failed the term {term} exam.")
         state = False
