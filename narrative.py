@@ -89,5 +89,36 @@ def print_map_repeatedly(player, game_map):
     return player
 
 
+def bid_farewell_message():
+    print(f"Thank you for playing our game, I hope it didn't get too real for you...")
+    print(f"Think of it as a prelude of what is to come~")
+    print(f"You are going to do well as CST Students, and in many other things.")
+    print_gradually(f"From the game-makers themselves you are given a straw.")
+    print_gradually(f"I think they are telling you when life gets hard, suck it up.")
+    print_gradually(f"Keep going, you are doing great. You might not think so but. Truly exceptional. Bye for now.")
+
+
+def welcome_to_term_two():
+    print_gradually(f"You are in term two now.")
+    print_gradually(f"Feeling okay? Don't hate us, hate the game~ Wait, don't hate the game.")
+    print_gradually(f"Here we go~")
+
+
+def welcome_to_term_three():
+    print_gradually(f"Whoa. We always thought this would be the hardest level to reach.")
+    print_gradually(f"Perhaps you proved us wrong?")
+    print_gradually(f"If you didn't get into co-op don't feel bad.")
+    print_gradually(f"Nothing to lose sleep over.")
+    print_gradually(f"Ready?")
+
+
+def welcome_to_term_four():
+    print_gradually(f"Last term.")
+    print_gradually(f"Can't believe you're still here.")
+    print_gradually(f"We estimated about a 95% drop-out rate.")
+    print_gradually(f"Seems like you were born to prove us wrong.")
+    print_gradually(f"Tsk. Well, good luck~")
+
+
 if __name__ == "__main__":
     co_op_term()
