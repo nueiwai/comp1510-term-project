@@ -29,3 +29,8 @@ Nu Ei Wai (Nolan), Spring Cheng
 | Mutable data structure          | character.py                    | 27-45            | Make a new character dictionary when location reaches new term |
 | Exception handling              | exam.py                         | 102-124          | Catch incorrect execution of code snippets during the exam     |
 | Membership operator             | character.py & main game loops  | 127 & throughout | Checking position on the map                                   |
+
+## Resources:
+* Installation of the pyfiglet module
+* Code snippets from the COMP1510 Slack channel and the Weekly Sample Code
+  * Special thanks to our classmates who took detailed annotated screenshots
