@@ -1,6 +1,7 @@
 from narrative import welcome_message
 import map_components
 import events_and_games_triggers
+import character
 import player_attribute_adjustments
 import narrative
 import exam
@@ -15,12 +16,11 @@ def term_1_game_loop():
     volunteering_positions = events_and_games_triggers.distribute_volunteering_events_each_term(sick_positions)
     social_event_positions = [3, 8, 13, 18, 23]
 
-    # player = character.make_character()
-    player = {'time': 0, 'GPA': 3.5, 'social': 78, 'location': 16}
+    player = character.make_character()
     game_map = map_components.generate_term_map()
     term = 1
 
-    while player["location"] < 75 and player["time"] > 5 and 2.8 <= player["GPA"] <= 4.0:
+    while player["location"] < 25 and player["time"] > 5 and 2.8 <= player["GPA"] <= 4.0:
         narrative.print_map_repeatedly(player, game_map)
 
         if player["location"] in sick_positions:
@@ -39,7 +39,7 @@ def term_1_game_loop():
         if not slept:
             continue
 
-    if player["location"] == 75:
+    if player["location"] == 25:
         exam_state = exam.exam(term)
         player_attribute_adjustments.exam_event_adjustment(player, exam_state)
         if not exam_state:
@@ -61,7 +61,7 @@ def term_1_game_loop():
                 narrative.print_gradually("You have met the social requirement to graduate this term. Congratulations! "
                                           "You have graduated this term. Isn't that great? You don't need to take the "
                                           "exam.!!!!!\n")
-                player["location"] += 1  # add 1 grid to reach grid 26
+                player["location"] = 26  # assign grid 26 from anywhere in term 1
                 co_op_evaluation_point = player  # store term 1 gpa for co-op evaluation
                 term_2_game_loop(player, co_op_evaluation_point)
             else:

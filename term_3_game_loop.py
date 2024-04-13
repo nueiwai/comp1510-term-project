@@ -8,6 +8,7 @@ from term_4_game_loop import term_4_game_loop
 
 
 def term_3_game_loop(player):
+    narrative.welcome_to_term_three()
     sick_positions = events_and_games_triggers.distribute_sick_events_each_term(base_frequency=1, extra_frequency=0,
                                                                                 grid_start=51, grid_end=69)
     volunteering_positions = events_and_games_triggers.distribute_volunteering_events_each_term(sick_positions,
@@ -61,6 +62,7 @@ def term_3_game_loop(player):
                 narrative.print_gradually("You have met the social requirement to graduate this term. Congratulations! "
                                           "You have graduated this term. Isn't that great? You don't need to take the "
                                           "exam.!!!!!")
+                player["location"] = 76  # assign grid 76 from anywhere in term 3
                 term_4_game_loop(player)
             else:
                 narrative.print_gradually("You didn't meet the social requirement to graduate this term. You have to "

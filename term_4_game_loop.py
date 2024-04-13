@@ -8,6 +8,7 @@ import post_graduation
 
 
 def term_4_game_loop(player):
+    narrative.welcome_to_term_four()
     sick_positions = events_and_games_triggers.distribute_sick_events_each_term(base_frequency=1, extra_frequency=0,
                                                                                 grid_start=76, grid_end=94)
     volunteering_positions = events_and_games_triggers.distribute_volunteering_events_each_term(sick_positions,
@@ -51,6 +52,7 @@ def term_4_game_loop(player):
                                       f"Please wait for the next phase to start.")
             narrative.waiting(3)
             post_graduation.job_interview()
+            narrative.bid_farewell_message()
 
     elif player["time"] < 5:
         narrative.print_gradually("You have running out of time to complete the term. So we are checking your status "
@@ -65,6 +67,7 @@ def term_4_game_loop(player):
                                           "exam.!!!!!\nYou can now proceed to the post-graduation phase.\n")
                 narrative.waiting(3)
                 post_graduation.job_interview()
+                narrative.bid_farewell_message()
             else:
                 narrative.print_gradually("You didn't meet the social requirement to graduate this term. You have to "
                                           "drop out sorry.")
