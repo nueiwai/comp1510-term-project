@@ -25,6 +25,8 @@ def make_character_each_term_start(player):
     """
     Create a dictionary that contains character's attributes at the start of each term that corresponds to that level.
 
+    :param player: a dictionary that stores the character's attributes
+    :precondition: player must be a dictionary with keys "time", "GPA", "social", and "location"
     :postcondition: create a dictionary with keys "time", "GPA", "social", and "location"
     :return: character attributes "time," "GPA," "social" and "location" as a dictionary
 
@@ -83,6 +85,9 @@ def update_player_location(player, accomplishment_state):
 
 
 def test_run_sleep():
+    """
+    Test the function update_player_location().
+    """
     player = {"time": 85, "GPA": 3.2, "social": 60, "location": 26}
     print(update_player_location(player, True))
 

@@ -31,7 +31,10 @@ def generate_code_snippet_options_for_interview(question_completed):
     Generate the available list of code snippets for the player to choose from for the interview.
 
     :param question_completed: a positive integer from 1 to 3
+    :precondition: question_completed must be a positive integer from 1 to 3
+    :postcondition: return a list of code snippets representing the available options for the given question
     :return: a list of code snippets representing the available options for the given question
+
     """
     question_1 = [
         f"years = 8 % 3\n",
@@ -72,6 +75,8 @@ def select_interview_question(question_completed):
     Select from three interview questions to display to interviewee in order.
 
     :param question_completed: a positive integer from 1 to 3
+    :precondition: question_completed must be a positive integer from 1 to 3
+    :postcondition: return the correct answer to the question and a message from the interviewer
     :return: a tuple containing the correct answer to the question and a message from the interviewer
 
     >>> select_interview_question(1)

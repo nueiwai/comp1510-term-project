@@ -1,4 +1,3 @@
-
 """
 This module contains:
 
@@ -30,8 +29,11 @@ def generate_code_snippet_options(term):
     """
     Generate the available list of code snippets for the player to choose from.
 
-    >>> generate_code_snippet_options()
-    ['result = math.factorial(5)', "print('Factorial of 5 is:', result)", 'import math']
+    :param term: an integer representing the term number
+    :precondition: term must be a positive integer
+    :postcondition: return a list of code snippets based on the term number
+    :return: a list of code snippets
+
     """
     if term == 1:
         return [
@@ -85,6 +87,9 @@ def get_player_choice(code_snippets):
     Ask the player for their ordered choices and store them in a list.
 
     :param code_snippets: a list containing the code snippets available for selection
+    :precondition: code_snippets must be a list of strings
+    :postcondition: return a list of code snippets chosen by the player
+    :return: a list of code snippets chosen by the player
     """
     chosen_snippets = []
     while True:
@@ -108,9 +113,11 @@ def execute_chosen_code_snippets(chosen_snippets):
     Execute the code snippets chosen in the order the player chose them, all at once.
 
     :param chosen_snippets: a list containing the code snippets chosen by the player
+    :precondition: chosen_snippets must be a list of strings
+    :postcondition: execute the code snippets chosen by the player
 
     >>> execute_chosen_code_snippets(
-    ...     ['import math', 'result = math.factorial(5)', "print('Factorial of 5 is:', result)"])
+    ... ['import math\', 'result = math.factorial(5)', "print('Factorial of 5 is:', result)"])
     <BLANKLINE>
     Your selected code snippets executed:
     Factorial of 5 is: 120
@@ -127,14 +134,18 @@ def display_code_snippet_options(code_snippets):
     Print out a numbered list that displays all the available code snippets for the player to choose from.
 
     :param code_snippets: a list containing the code snippets available for selection
+    :precondition: code_snippets must be a list of strings
+    :postcondition: print out a numbered list of code snippets
+
 
     >>> display_code_snippet_options(
-    ...     ['import math', 'result = math.factorial(5)', "print('Factorial of 5 is:', result)"])
+    ... [f"import math\\n", f"result = math.factorial(5)\\n", f"print('Factorial of 5 is:', result)\\n"])
     <BLANKLINE>
     Available code snippets to choose from:
     1. import math
     2. result = math.factorial(5)
     3. print('Factorial of 5 is:', result)
+
     """
     print(f"\nAvailable code snippets to choose from:")
     for count, code_snippet in enumerate(code_snippets):
@@ -167,4 +178,7 @@ def exam(term=4):
 
 
 if __name__ == "__main__":
+    """
+    Run the exam function.
+    """
     exam()

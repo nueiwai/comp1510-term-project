@@ -1,5 +1,25 @@
 import random
-import narrative
+from narrative import print_gradually
+"""
+This module contains functions that adjust the player's attributes based on the events that occur in the game.
+
+The functions in this module are used to adjust the player's attributes based on the events that occur in the game.
+The player's attributes include time, GPA, and social score. The functions in this module adjust these attributes
+based on the events that occur in the game, such as completing an assignment, taking an exam, attending a social event,
+and volunteering.
+
+functions:
+- adjust_gpa(gpa, change)
+- adjust_social(social, change, limit)
+- adjust_time(time, change)
+- assignment_event_adjustment(player)
+- exam_event_adjustment(player, state)
+- study_session_event_adjustment(player, social_limit)
+- social_event_adjustment(player, social_limit)
+- sick_event_adjustment(player, social_limit)
+- volunteering_event_adjustment(player, social_limit)
+- test_run_adjustments()
+"""
 
 
 def adjust_gpa(gpa, change):
@@ -11,7 +31,7 @@ def adjust_gpa(gpa, change):
     :precondition: gpa must be a float within the range 0.0 to 4.0, inclusive
     :precondition: change must be a float
     :postcondition: calculate the GPA correctly to 2 decimal places in range [0.0, 4.0] according to the change
-    :return: adjusted GPA, rounded to 2 decimal places
+    :return: adjusted GPA as float, rounded to 2 decimal places
 
     >>> adjust_gpa(3.95, 0.1)
     4.0
@@ -19,7 +39,7 @@ def adjust_gpa(gpa, change):
     2.2
 
     """
-    updated_gpa = gpa + change
+    updated_gpa = round(float(gpa + change), 3)
     if updated_gpa > 4.0:
         return 4.0
     elif updated_gpa < 0:
@@ -28,28 +48,25 @@ def adjust_gpa(gpa, change):
         return updated_gpa
 
 
-def adjust_social(social, change, limit):
+def adjust_social(social, change):
     """
     Adjust a player's social score based on the given change, ensuring it stays within 0 to limit.
 
     :param social: current social score of the player
     :param change: amount to adjust the social score by
-    :param limit: the max social value allowed
     :precondition: social must be an integer within the range 0 to limit
     :precondition: change must be an integer that can be positive or negative
     :postcondition: calculate social score correctly, ensuring it stays within the range 0 to limit, inclusive
     :return: the adjusted social score as an integer
 
-    >>> adjust_social(95, 10, 95)
-    95
-    >>> adjust_social(5, -10, 100)
+    >>> adjust_social(95, 10)
+    105
+    >>> adjust_social(5, -10)
     0
-    >>> adjust_social(50, -20, 100)
+    >>> adjust_social(50, -20)
     30
     """
     updated_social = social + change
-    if updated_social > limit:
-        return limit
     if updated_social < 0:
         return 0
     return updated_social
@@ -88,9 +105,19 @@ def assignment_event_adjustment(player):
     :return: the updated player dictionary
 
     >>> assignment_event_adjustment({"time": 100, "GPA": 3.5, "social": 50})
+    You have completed an assignment, Great Job!
+    You have earned 0.1 GPA points and lost 10 units of time in the process.
+    Now you have 3.60 GPA points and 95 units of time left.
+    Remember you need to balance your time, GPA and social to graduate.
+    <BLANKLINE>
     {'time': 95, 'GPA': 3.6, 'social': 50}
 
     >>> assignment_event_adjustment({"time": 50, "GPA": 3.9, "social": 50})
+    You have completed an assignment, Great Job!
+    You have earned 0.1 GPA points and lost 10 units of time in the process.
+    Now you have 4.00 GPA points and 45 units of time left.
+    Remember you need to balance your time, GPA and social to graduate.
+    <BLANKLINE>
     {'time': 45, 'GPA': 4.0, 'social': 50}
     """
     player["time"] = adjust_time(player["time"], -5)
@@ -114,9 +141,17 @@ def exam_event_adjustment(player, state):  # state True == pass, state False == 
     :return: the updated player dictionary
 
     >>> exam_event_adjustment({"time": 200, "GPA": 3.0, "social": 50}, True)
+    You have passed the exam. Congratulations!
+    You have earned 0.2 GPA points.
+    Now you have 3.20 GPA and 185 units of time left.
+    <BLANKLINE>
     {'time': 185, 'GPA': 3.2, 'social': 50}
 
     >>> exam_event_adjustment({"time": 200, "GPA": 3.0, "social": 50}, False)
+    You have failed the exam. You have lost 0.2 GPA points.
+    Remember you need to balance your time and GPA and social to graduate.
+    You failed the ultimate test. You are leaving the school.
+    <BLANKLINE>
     {'time': 185, 'GPA': 2.8, 'social': 50}
     """
 
@@ -132,77 +167,96 @@ def exam_event_adjustment(player, state):  # state True == pass, state False == 
         print(f"You have failed the exam. You have lost 0.2 GPA points.\n"
               f"Remember you need to balance your time and GPA and social to graduate.\n"
               f"You failed the ultimate test. You are leaving the school.\n")
-
     return player
 
 
-def study_session_event_adjustment(player, social_limit):
+def study_session_event_adjustment(player):
     """
     Adjust the player's attributes for doing a study session, affecting time, GPA and social.
 
     :param player: a dictionary representing the player's state, including "time", "GPA", and "social"
-    :param social_limit: maximum social status allowed
     :precondition: player must be a dictionary with keys "time", "GPA" and "social" values as int, float, and int
                    respectively
     :precondition: social_limit must be a positive int
     :postcondition: reduce player's time by 8, increase GPA by 0.05 and reduce social score by 5
     :return: the updated player dictionary
 
-    >>> study_session_event_adjustment({"time": 120, "GPA": 2.8, "social": 50}, 80)
-    {'time': 112, 'GPA': 2.85, 'social': 45}
+    >>> player1 = {"time": 120, "GPA": 2.8, "social": 50, "location": 4}
+    >>> study_session_event_adjustment(player1)
+    You have completed a study session. Great Job!
+    You have earned 0.05 GPA points and lost 5 units of social score in the process.
+    Remember you need to balance your time and GPA and social to graduate.
+    Now you have 2.85 GPA, 45 social score and 105 units of timeleft.
+    <BLANKLINE>
+    {'time': 105, 'GPA': 2.85, 'social': 45, 'location': 5}
 
-    >>> study_session_event_adjustment({"time": 80, "GPA": 3.95, "social": 10}, 80)
-    {'time': 72, 'GPA': 4.0, 'social': 5}
+    >>> player2 = {"time": 150, "GPA": 3.6, "social": 30, "location": 4}
+    >>> study_session_event_adjustment(player2)
+    You have completed a study session. Great Job!
+    You have earned 0.05 GPA points and lost 5 units of social score in the process.
+    Remember you need to balance your time and GPA and social to graduate.
+    Now you have 3.65 GPA, 25 social score and 135 units of timeleft.
+    <BLANKLINE>
+    {'time': 135, 'GPA': 3.65, 'social': 25, 'location': 5}
+
     """
     player["time"] = adjust_time(player["time"], -15)
     player["GPA"] = adjust_gpa(player["GPA"], 0.05)
-    player["social"] = adjust_social(player["social"], -5, social_limit)
+    player["social"] = adjust_social(player["social"], -5)
     player["location"] += 1
-    print(f"You have completed a study session. Great Job! ")
-    print(f"You have earned 0.05 GPA points and lost 5 units of social score in the process. ")
-    print(f"Remember you need to balance your time and GPA and social to graduate. ")
-    print(f"Now you have {player['GPA']:.2f} GPA, {player['social']} social score and {player['time']} units of time"
-          f"left.")
+    print(f"You have completed a study session. Great Job!\n"
+          f"You have earned 0.05 GPA points and lost 5 units of social score in the process.\n"
+          f"Remember you need to balance your time and GPA and social to graduate.\n"
+          f"Now you have {player['GPA']:.2f} GPA, {player['social']} social score and {player['time']} units of time"
+          f"left.\n")
     return player
 
 
-def social_event_adjustment(player, social_limit):
+def social_event_adjustment(player):
     """
     Adjust the player's attributes for going to a social event, affecting time, GPA and social.
 
     :param player: a dictionary representing the player's state, including "time" and "GPA"
-    :param social_limit: max social status allowed
     :precondition: player must be a dictionary with keys "time", "GPA" and "social" values as int, float, and int
                    respectively
     :precondition: social_limit must be a positive int
     :postcondition: reduce player's time by 10, GPA by 0.08 and increase social score by 10
     :return: the updated player dictionary
 
-    >>> social_event_adjustment({"time": 150, "GPA": 3.6, "social": 30}, 80)
-    {'time': 140, 'GPA': 3.52, 'social': 40}
+    >>> social_event_adjustment({"time": 150, "GPA": 3.6, "social": 30, "location": 6})
+    You have attended a social event. You made good connections at the event Great Job!
+    You have lost 0.08 GPA points and earned 10 units of social score in the process.
+    Remember you need to balance your time and GPA and social to graduate.
+    Now you have 3.52 GPA, 40 social score and 140 units of timeleft.
+    <BLANKLINE>
+    {'time': 140, 'GPA': 3.52, 'social': 40, 'location': 7}
 
-    >>> social_event_adjustment({"time": 90, "GPA": 2.0, "social": 60}, 80)
-    {'time': 80, 'GPA': 1.92, 'social': 70}
+    >>> social_event_adjustment({"time": 90, "GPA": 2.0, "social": 60, "location": 6})
+    You have attended a social event. You made good connections at the event Great Job!
+    You have lost 0.08 GPA points and earned 10 units of social score in the process.
+    Remember you need to balance your time and GPA and social to graduate.
+    Now you have 1.92 GPA, 70 social score and 80 units of timeleft.
+    <BLANKLINE>
+    {'time': 80, 'GPA': 1.92, 'social': 70, 'location': 7}
 
     """
     player["time"] = adjust_time(player["time"], -10)
     player["GPA"] = adjust_gpa(player["GPA"], -0.08)
-    player["social"] = adjust_social(player["social"], 10, social_limit)
+    player["social"] = adjust_social(player["social"], 10)
     player["location"] += 1
-    print(f"You have attended a social event. You made good connections at the event Great Job! "
-          f"You have lost 0.08 GPA points and earned 10 units of social score in the process. "
-          f"Remember you need to balance your time and GPA and social to graduate. "
+    print(f"You have attended a social event. You made good connections at the event Great Job!\n"
+          f"You have lost 0.08 GPA points and earned 10 units of social score in the process.\n"
+          f"Remember you need to balance your time and GPA and social to graduate.\n"
           f"Now you have {player['GPA']:.2f} GPA, {player['social']} social score and {player['time']} units of time"
-          f"left.")
+          f"left.\n")
     return player
 
 
-def sick_event_adjustment(player, social_limit):
+def sick_event_adjustment(player):
     """
     Adjust the player's attributes for being sick, affecting time, GPA and social.
 
     :param player: a dictionary representing the player's state, including "time" and "GPA"
-    :param social_limit: max social status allowed
     :precondition: player must be a dictionary with keys "time", "GPA" and "social" values as int, float, and int
                    respectively
     :precondition: social_limit must be a positive int
@@ -212,16 +266,15 @@ def sick_event_adjustment(player, social_limit):
     time_lost = random.randint(1, 10)
     player["time"] = adjust_time(player["time"], -time_lost)  # Random time reduction between 1 and 10 (severeness)
     player["GPA"] = adjust_gpa(player["GPA"], -0.2)
-    player["social"] = adjust_social(player["social"], -15, social_limit)
+    player["social"] = adjust_social(player["social"], -15)
     return [player, time_lost]
 
 
-def volunteering_event_adjustment(player, social_limit):
+def volunteering_event_adjustment(player):
     """
     Adjust the player's attributes for volunteering, affecting time, GPA and social.
 
     :param player: a dictionary representing the player's state, including "time" and "GPA"
-    :param social_limit: max social status allowed
     :precondition: player must be a dictionary with keys "time", "GPA" and "social" values as int, float, and int
                    respectively
     :precondition: social_limit must be a positive int
@@ -230,73 +283,50 @@ def volunteering_event_adjustment(player, social_limit):
 
     >>> volunteering_event_adjustment({"time": 200, "GPA": 2.5, "social": 10}, 80)
     You have done volunteering for the Day Care Center. You had a very great time.
-    {'time': 180, 'GPA': 2.55, 'social': 25}
+    You have earned 0.05 GPA points and 30 units of social score in the process.
+    Now you have 2.55 points, 40 social score and
+    Remember you need to balance your time, GPA and social to graduate.
+    {'time': 180, 'GPA': 2.55, 'social': 40}
 
     >>> volunteering_event_adjustment({"time": 180, "GPA": 3.95, "social": 5}, 80)
     You have done volunteering for the Day Care Center. You had a very great time.
-    {'time': 160, 'GPA': 4.0, 'social': 20}
+    You have earned 0.05 GPA points and 30 units of social score in the process.
+    Now you have 4.00 points, 35 social score and
+    Remember you need to balance your time, GPA and social to graduate.
+    {'time': 160, 'GPA': 4.0, 'social': 35}
     """
     player["time"] = adjust_time(player["time"], -20)
     player["GPA"] = adjust_gpa(player["GPA"], 0.05)
-    player["social"] = adjust_social(player["social"], 30, social_limit)
-    narrative.print_gradually(f"You have done volunteering for the Day Care Center. You had a very great time.\n"
-                              f"You have earned 0.05 GPA points and 30 units of social score in the process.\n"
-                              f"Now you have {player['GPA']:.2f} points, {player['social']} social score and\n"
-                              f"Remember you need to balance your time, GPA and social to graduate.")
+    player["social"] = adjust_social(player["social"], 30)
+    print_gradually(f"You have done volunteering for the Day Care Center. You had a very great time.\n"
+                    f"You have earned 0.05 GPA points and 30 units of social score in the process.\n"
+                    f"Now you have {player['GPA']:.2f} points, {player['social']} social score and\n"
+                    f"Remember you need to balance your time, GPA and social to graduate.")
     return player
 
 
-def recovery_exam_event_adjustment(player, state):  # state is True when player pass recovery exam and False otherwise
-    """
-    Adjust the player's attributes based on the outcome of a recovery exam, affecting time and GPA.
-
-    :param player: a dictionary representing the player's state, including "time" and "GPA"
-    :param state: a boolean indicating the outcome of the recovery exam: True for pass, False for fail
-    :precondition: player must be a dictionary with keys "time" and "GPA" and values as int and float, respectively
-    :precondition: state must be a boolean
-    :postcondition:  -reduces player's time by 20 and sets the GPA to 2.8 if the exam is passed (state is True)
-                     -a message is printed and the player's state is unchanged if the exam is failed (state is False)
-    :return: -the updated player dictionary if the exam is passed
-             -None and print a message if failed
-
-    >>> recovery_exam_event_adjustment({"time": 100, "GPA": 2.5, "social": 50}, True)
-    {'time': 80, 'GPA': 2.8, 'social': 50}
-    >>> recovery_exam_event_adjustment({"time": 100, "GPA": 1.8, "social": 50}, False)
-    You failed the recovery exam, so you are not graduating. Sorry
-    """
-    if state is False:
-        print("You failed the recovery exam, so you are not graduating. Sorry.")
-    else:
-        player["time"] = adjust_time(player["time"], -20)
-        player["GPA"] = 2.8  # GPA is set to 2.8 for next year if player passes the recovery exam
-        return player
-
-
 def test_run_adjustments():
+    """
+    Test the functions in this module.
+    """
     # Initialize a player dictionary
-    user = {"time": 100, "GPA": 1.8, "social": 50}
-    social_limit_user = 80
+    user = {"time": 100, "GPA": 1.8, "social": 50, "location": 1}
 
     # Example cases to see functions are working properly or not
     user = assignment_event_adjustment(user)
     print(user)
-    user = study_session_event_adjustment(user, social_limit_user)
+    user = study_session_event_adjustment(user)
     print(user)
-    user = sick_event_adjustment(user, social_limit_user)
+    user1 = sick_event_adjustment(user)
     print(user)
-    user = social_event_adjustment(user, social_limit_user)
+    user = social_event_adjustment(user)
     print(user)
-    user = volunteering_event_adjustment(user, social_limit_user)
+    user = volunteering_event_adjustment(user)
     print(user)
 
     user = exam_event_adjustment(user, True)  # Player passes the exam
     print(user)
-
-    if user["GPA"] < 2.0:  # Check the need for recovery exam
-        user = recovery_exam_event_adjustment(user, True)  # Player passes recovery exam
-    else:
-        print("No need for a recovery exam, GPA is above 2.0")
-    print(user)
+    print(user1)
 
 
 if __name__ == "__main__":

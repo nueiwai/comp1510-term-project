@@ -1,3 +1,14 @@
+"""
+This module contains functions to generate and display the game map, including the player's location.
+functions:
+    - generate_term_map(total_cell)
+    - add_term_information_to_map(row_content, cell, term_starting_cells)
+    - add_player_location_to_map(row_content, cell, player)
+    - generate_row_content_for_map(row, columns, term_starting_cells, player)
+    - print_game_map(player)
+    - describe_current_location(game__map, player)
+    - test_run_map()
+"""
 def generate_term_map(total_cell=100):
     """
     Generate a dictionary of cell numbers as keys their respective term, day of term, and week of term as value.

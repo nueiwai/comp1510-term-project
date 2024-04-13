@@ -13,6 +13,16 @@ Other narrative, ascii art related components of the game will also go here.
 def check_met_criteria(player):
     """
     Check if the player meets the criteria to enter bonus level (co-op).
+    :param player: a dictionary representing the player's state
+    :precondition: player must be a dictionary with a key "GPA"
+    :postcondition: return True if the player meets the criteria, False otherwise
+    :return: a boolean representing if the player meets the criteria
+
+    >>> check_met_criteria({'GPA': 3.5})
+    True
+
+    >>> check_met_criteria({'GPA': 3.4})
+    False
     """
     return player['GPA'] >= 3.5
 
@@ -20,16 +30,24 @@ def check_met_criteria(player):
 def print_gradually(text):
     """
     Print the narrative text slowly, with progressive reveal.
+
+    :param text: a string
+    :precondition: text must be a string
+    :postcondition: print out the text with a delay of 0.03 seconds between each character
     """
     for character in text:
         print(character, end="")
-        time.sleep(0.03)
+        time.sleep(0.02)
     print()
 
 
 def waiting(count_ticktock):
     """
     Display the narrative 'waiting.'
+
+    :param count_ticktock: a positive int
+    :precondition: count_ticktock must be an int
+    :postcondition: print out 'Tick' and 'Tock' with a delay of 1 second between each
     """
     print_gradually(f"Waiting . . .")
     for _ in range(count_ticktock):
@@ -42,6 +60,8 @@ def waiting(count_ticktock):
 def co_op_term():
     """
     Display the narrative 'co-op.'
+
+    :postcondition: print out the narrative for the co-op term
     """
     print_gradually(f"Welcome to your co-op term! We are just thrilled~ you made it here.")
     print_gradually(f"Prepare yourself for exciting projects valuable industry experience, ahem.")
@@ -56,6 +76,11 @@ def co_op_term():
 def bonus_part(player):
     """
     Drive the bonus part of the game.
+
+    :param player: a dictionary representing the player's state
+    :precondition: player must be a dictionary with a key "GPA"
+    :postcondition: print out the narrative for the bonus part of the game
+
     """
     if check_met_criteria(player):
         co_op_term()
@@ -64,6 +89,11 @@ def bonus_part(player):
 
 
 def welcome_message():
+    """
+    Display the welcome message.
+
+    :postcondition: print out the welcome message
+    """
     print_gradually("Welcome Player. You will be role playing as a computing student in this game.\n"
                     "There will be a lot of challenges for you. Make sure to manage your life well.\n Balance of your "
                     "life is the key to success in this game.\nYou need to graduate from the program to win the game. "
@@ -73,6 +103,12 @@ def welcome_message():
 
 
 def drop_out():
+    """
+    Display the dropout message.
+
+    :postcondition: print out the dropout message
+
+    """
     # Print the dropout message with some encouragement and advice
     print_gradually(f"Unfortunately, you failed the exam, you must leave the program due to failing the exam.")
     print_gradually("This is not the end of your journey! Here are a few things you might consider:")
@@ -80,16 +116,30 @@ def drop_out():
     print_gradually("- Explore other educational opportunities or different fields that might suit your strengths.")
     print_gradually("- Consider gaining some practical experience through internships or part-time jobs.")
     print_gradually("- When ready, you can reapply or pursue alternative certification programs.")
-    return
 
 
 def print_map_repeatedly(player, game_map):
+    """
+    Print the game map and the player's current location repeatedly.
+
+    :param player: a dictionary representing the player's state
+    :param game_map: a dictionary representing the game map
+    :precondition: player must be a dictionary with a key "location"
+    :precondition: game_map must be a dictionary with keys representing the cell numbers
+    :postcondition: print out the game map and the player's current location
+
+    """
     map_components.print_game_map(player)
     map_components.describe_current_location(game_map, player)
     return player
 
 
 def bid_farewell_message():
+    """
+    Display the farewell message.
+
+    :postcondition: print out the farewell message
+    """
     print(f"Thank you for playing our game, I hope it didn't get too real for you...")
     print(f"Think of it as a prelude of what is to come~")
     print(f"You are going to do well as CST Students, and in many other things.")
@@ -99,12 +149,24 @@ def bid_farewell_message():
 
 
 def welcome_to_term_two():
+    """
+    Display the welcome message for term two.
+
+    :postcondition: print out the welcome message for term two
+    :return:
+    """
     print_gradually(f"You are in term two now.")
     print_gradually(f"Feeling okay? Don't hate us, hate the game~ Wait, don't hate the game.")
     print_gradually(f"Here we go~")
 
 
 def welcome_to_term_three():
+    """
+    Display the welcome message for term three.
+
+    :postcondition: print out the welcome message for term three
+    :return:
+    """
     print_gradually(f"Whoa. We always thought this would be the hardest level to reach.")
     print_gradually(f"Perhaps you proved us wrong?")
     print_gradually(f"If you didn't get into co-op don't feel bad.")
@@ -113,6 +175,11 @@ def welcome_to_term_three():
 
 
 def welcome_to_term_four():
+    """
+    Display the welcome message for term four.
+
+    :postcondition: print out the welcome message for term four
+    """
     print_gradually(f"Last term.")
     print_gradually(f"Can't believe you're still here.")
     print_gradually(f"We estimated about a 95% drop-out rate.")
@@ -121,4 +188,10 @@ def welcome_to_term_four():
 
 
 if __name__ == "__main__":
+    """
+    Run the functions in this module to demonstrate their behavior.
+    """
+    welcome_message()
+    drop_out()
+    waiting(2)
     co_op_term()
