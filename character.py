@@ -69,18 +69,18 @@ def update_player_location(player, accomplishment_state):
         except ValueError as error:
             print(error)
 
-    if sleep_through == "Y":
-        if player["location"] in [24, 49, 74, 99]:
-            player["location"] += 1  # skip just one day sleeping
-            print(f"Oops. You slept through the entire day. Your woke up with full energy.")
-            return player
+    if sleep_through == "Y" and player["location"] in [24, 49, 74, 99]:
+        player["location"] += 1  # skip just one day sleeping
+        print(f"Oops. You slept through the entire day. Your woke up with full energy.")
+        return player
 
-        else:
-            player["location"] += 2  # skip just one day sleeping
-            print(f"Oops. You slept through the whole two days. Your woke up with full energy.")
-            return player
+    elif sleep_through == "Y" and player["location"] not in [25, 50, 75, 100]:
+        player["location"] += 2  # skip just one day sleeping
+        print(f"Oops. You slept through the whole two days. Your woke up with full energy.")
+        return player
+
     else:
-        print(f"You chose not to sleep...you probably should have slept though.")
+        print(f"You chose not to sleep...you probably should have slept though.\n")
         return player
 
 

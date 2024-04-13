@@ -106,24 +106,24 @@ def assignment_event_adjustment(player):
 
     >>> assignment_event_adjustment({"time": 100, "GPA": 3.5, "social": 50})
     You have completed an assignment, Great Job!
-    You have earned 0.1 GPA points and lost 10 units of time in the process.
-    Now you have 3.60 GPA points and 95 units of time left.
+    You have earned 0.05 GPA points and lost 5 units of time in the process.
+    Now you have 3.55 GPA points and 95 units of time left.
     Remember you need to balance your time, GPA and social to graduate.
     <BLANKLINE>
-    {'time': 95, 'GPA': 3.6, 'social': 50}
+    {'time': 95, 'GPA': 3.55, 'social': 50}
 
     >>> assignment_event_adjustment({"time": 50, "GPA": 3.9, "social": 50})
     You have completed an assignment, Great Job!
-    You have earned 0.1 GPA points and lost 10 units of time in the process.
-    Now you have 4.00 GPA points and 45 units of time left.
+    You have earned 0.05 GPA points and lost 5 units of time in the process.
+    Now you have 3.95 GPA points and 45 units of time left.
     Remember you need to balance your time, GPA and social to graduate.
     <BLANKLINE>
-    {'time': 45, 'GPA': 4.0, 'social': 50}
+    {'time': 45, 'GPA': 3.95, 'social': 50}
     """
     player["time"] = adjust_time(player["time"], -5)
-    player["GPA"] = adjust_gpa(player["GPA"], 0.1)
+    player["GPA"] = adjust_gpa(player["GPA"], 0.05)
     print(f"You have completed an assignment, Great Job!\n"
-          f"You have earned 0.1 GPA points and lost 10 units of time in the process.\n"
+          f"You have earned 0.05 GPA points and lost 5 units of time in the process.\n"
           f"Now you have {player['GPA']:.2f} GPA points and {player['time']} units of time left.\n"
           f"Remember you need to balance your time, GPA and social to graduate.\n")
     return player
@@ -184,28 +184,28 @@ def study_session_event_adjustment(player):
     >>> player1 = {"time": 120, "GPA": 2.8, "social": 50, "location": 4}
     >>> study_session_event_adjustment(player1)
     You have completed a study session. Great Job!
-    You have earned 0.05 GPA points and lost 5 units of social score in the process.
+    You have earned 1.00 GPA points and lost 5 units of social score and 10 units of time in the process.
     Remember you need to balance your time and GPA and social to graduate.
-    Now you have 2.85 GPA, 45 social score and 105 units of timeleft.
+    Now you have 3.80 GPA, 45 social score and 110 units of timeleft.
     <BLANKLINE>
-    {'time': 105, 'GPA': 2.85, 'social': 45, 'location': 5}
+    {'time': 110, 'GPA': 3.8, 'social': 45, 'location': 5}
 
     >>> player2 = {"time": 150, "GPA": 3.6, "social": 30, "location": 4}
     >>> study_session_event_adjustment(player2)
     You have completed a study session. Great Job!
-    You have earned 0.05 GPA points and lost 5 units of social score in the process.
+    You have earned 1.00 GPA points and lost 5 units of social score and 10 units of time in the process.
     Remember you need to balance your time and GPA and social to graduate.
-    Now you have 3.65 GPA, 25 social score and 135 units of timeleft.
+    Now you have 4.00 GPA, 25 social score and 140 units of timeleft.
     <BLANKLINE>
-    {'time': 135, 'GPA': 3.65, 'social': 25, 'location': 5}
+    {'time': 140, 'GPA': 4.0, 'social': 25, 'location': 5}
 
     """
-    player["time"] = adjust_time(player["time"], -15)
-    player["GPA"] = adjust_gpa(player["GPA"], 0.05)
+    player["time"] = adjust_time(player["time"], -10)
+    player["GPA"] = adjust_gpa(player["GPA"], 1)
     player["social"] = adjust_social(player["social"], -5)
     player["location"] += 1
     print(f"You have completed a study session. Great Job!\n"
-          f"You have earned 0.05 GPA points and lost 5 units of social score in the process.\n"
+          f"You have earned 1.00 GPA points and lost 5 units of social score and 10 units of time in the process.\n"
           f"Remember you need to balance your time and GPA and social to graduate.\n"
           f"Now you have {player['GPA']:.2f} GPA, {player['social']} social score and {player['time']} units of time"
           f"left.\n")

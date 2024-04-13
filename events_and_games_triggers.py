@@ -110,6 +110,12 @@ def distribute_volunteering_events_each_term(location_triggers_sick, grid_start=
 
 
 def quiz_questions():
+    """
+    Assign quiz questions to the player in a rotaton.
+
+    :postcondition: assign quiz questions to the player in a rotation
+    :return: a list of tuples that represents the assigned quiz questions
+    """
     subset_questions = ["C", "B", "R", "R", "B", "C"]
     question_cycle = itertools.cycle(subset_questions)
 
@@ -121,7 +127,7 @@ def quiz_questions():
     return questions_list
 
 
-def trigger_quiz(player, term, shift_limit=10, shift_grid=0, number_upperbound=100, base_upperbound=3,
+def trigger_quiz(player, term, shift_limit=10, number_upperbound=100, base_upperbound=3,
                  roman_upbound=100):
     """
     Trigger a quiz event based on the player's location.
@@ -129,7 +135,6 @@ def trigger_quiz(player, term, shift_limit=10, shift_grid=0, number_upperbound=1
     :param player: a dictionary that stores the character's attributes
     :param term: an integer that represents the current term
     :param shift_limit: an integer that represents the limit of shift in Caesar Cipher game
-    :param shift_grid: an integer that represents the shift in the grid
     :param number_upperbound: an integer that represents the upperbound for the number in base conversion game
     :param base_upperbound: an integer that represents the upperbound for the base in base conversion game
     :param roman_upbound: an integer that represents the upperbound for the Roman numeral in Roman numeral conversion
@@ -137,7 +142,6 @@ def trigger_quiz(player, term, shift_limit=10, shift_grid=0, number_upperbound=1
     :precondition: player must be a dictionary with keys "time", "GPA", "social", and "location"
     :precondition: term must be an integer
     :precondition: shift_limit must be a positive integer
-    :precondition: shift_grid must be a positive integer
     :precondition: number_upperbound must be a positive integer
     :precondition: base_upperbound must be a positive integer
     :precondition: roman_upbound must be a positive integer
@@ -147,7 +151,7 @@ def trigger_quiz(player, term, shift_limit=10, shift_grid=0, number_upperbound=1
     """
     assigned_questions = quiz_questions()
     for location, question in assigned_questions:
-        if player["location"] + shift_grid == location:
+        if player["location"] == location:
             if question == "B":
                 mini_games.play_base_conversion_game(player, number_upperbound, base_upperbound)
             elif question == "C":
@@ -184,7 +188,7 @@ def player_choice_for_event_participation(event_name):
 
 def trigger_study_session(player, player_choice_study_session):
     if player_choice_study_session:
-        player_attribute_adjustments.study_session_event_adjustment(player, 100)
+        player_attribute_adjustments.study_session_event_adjustment(player)
     else:
         print("You chose not to study. Remember, every decision counts!")
         print(f"You have {player['GPA']:.2f} GPA, {player['social']} social score and {player['time']} units of time\n")
@@ -212,12 +216,18 @@ def trigger_assignment(player, player_choice):
     return player
 
 
-def process_player_daily_events(player, term):
+def process_player_daily_events(player, term, shift_limit=5, number_upperbound=50, base_upperbound=2,
+                                roman_upbound=100):
     """
     Process the player's daily events.
 
     :param player: a dictionary that stores the character's attributes
     :param term: an integer that represents the current term
+    :param shift_limit: an integer that represents the limit of shift in Caesar Cipher game
+    :param number_upperbound: an integer that represents the upperbound for the number in base conversion game
+    :param base_upperbound: an integer that represents the upperbound for the base in base conversion game
+    :param roman_upbound: an integer that represents the upperbound for the Roman numeral in Roman numeral conversion
+                          game
     :precondition: player must be a dictionary with keys "time", "GPA", "social", and "location"
     :precondition: term must be a positive integer in range [1, 4]
     :postcondition: process the player's daily events
@@ -233,9 +243,12 @@ def process_player_daily_events(player, term):
     player = trigger_study_session(player, player_choice_study_session)
 
     # Trigger a quiz event
-    player = trigger_quiz(player, term)
+    player = trigger_quiz(player, term, shift_limit, number_upperbound, base_upperbound,
+                          roman_upbound)
 
-    if not (player_choice_assignment and player_choice_study_session):
+    if (player_choice_assignment and player_choice_study_session) or (player_choice_assignment and
+                                                                      not player_choice_study_session) or (
+            not player_choice_assignment and player_choice_study_session):
         player = character.update_player_location(player, True)
         return player, True
     else:
