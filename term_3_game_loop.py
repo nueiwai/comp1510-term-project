@@ -18,7 +18,7 @@ def term_3_game_loop(player):
     term = 3
     social_limit = 110
 
-    while player["location"] < 75 and player["time"] > 5 and 2.8 <= player["GPA"] < 4.0:
+    while player["location"] < 75 and player["time"] > 5 and 2.8 <= player["GPA"] <= 4.0:
         narrative.print_map_repeatedly(player, game_map)
 
         if player["location"] in sick_positions:

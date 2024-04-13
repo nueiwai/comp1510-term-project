@@ -5,7 +5,7 @@ import player_attribute_adjustments
 import character
 import narrative
 import exam
-import term_3_game_loop
+import term_2_game_loop
 
 
 def term_1_game_loop():
@@ -20,7 +20,7 @@ def term_1_game_loop():
     term = 1
     social_limit = 100
 
-    while player["location"] < 25 and player["time"] > 5 and 2.8 <= player["GPA"] < 4.0:
+    while player["location"] < 25 and player["time"] > 5 and 2.8 <= player["GPA"] <= 4.0:
         map_components.print_game_map(player)
         map_components.describe_current_location(game_map, player)
 
@@ -91,7 +91,7 @@ def term_1_game_loop():
         else:
             narrative.print_gradually("You didn't meet the GPA requirement to graduate this term. You have to drop out "
                                       "sorry.")
-
+y
 
 if __name__ == "__main__":
     term_1_game_loop()
