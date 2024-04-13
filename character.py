@@ -124,7 +124,7 @@ def update_player_location(player, accomplishment_state=False):
             print(error)
 
     if sleep_through == "Y":
-        if player["location"] != 49 and player["location"] != 24:
+        if player["location"] in [24, 49, 74, 99]:
             player["location"] += 2  # skip two day sleeping
             print(f"Oops. You slept through the entire day. Your woke up with full energy.")
             return player
